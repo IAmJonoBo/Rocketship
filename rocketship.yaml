@@ -1,0 +1,16 @@
+# Rocketship Configuration Template
+# See docs/Configuration & Schema Documentation.md and shared/src/schema/rocketship.schema.json for details
+
+agents:
+  - name: "planner"
+    type: "PlannerAgent"
+    enabled: true
+  - name: "coder"
+    type: "CoderAgent"
+    enabled: true
+  - name: "critic"
+    type: "CriticAgent"
+    enabled: true
+  - name: "tester"
+    type: "TesterAgent"
+    enabled: true

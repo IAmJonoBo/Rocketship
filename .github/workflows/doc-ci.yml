@@ -1,0 +1,23 @@
+name: Doc-CI
+
+on:
+  pull_request:
+    paths:
+      - 'docs/**/*.md'
+      - '.github/workflows/doc-ci.yml'
+
+jobs:
+  link-and-toc-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check links in docs
+        uses: lycheeverse/lychee-action@v1.10.0
+        with:
+          args: --no-progress --verbose docs/**/*.md
+      - name: Ensure TOC in Markdown files
+        run: |
+          npm install -g markdown-toc
+          for file in docs/*.md; do
+            markdown-toc --maxdepth 3 --bullets -i "$file"
+          done

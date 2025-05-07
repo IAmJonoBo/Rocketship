@@ -1,0 +1,30 @@
+{
+  "name": "rocketship-extension",
+  "version": "0.1.0",
+  "main": "src/extension.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint .",
+    "test": "jest"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/vscode": "^1.99.1",
+    "vscode": "^1.1.37"
+  },
+  "engines": {
+    "vscode": ">=1.70.0"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "rocketship.helloWorld",
+        "title": "Rocketship: Hello World"
+      }
+    ]
+  },
+  "dependencies": {
+    "eslint": "^9.26.0",
+    "jest": "^29.7.0"
+  }
+}

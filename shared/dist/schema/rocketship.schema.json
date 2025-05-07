@@ -1,0 +1,14 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "Rocketship Configuration Schema",
+    "description": "Schema for validating rocketship.yaml configuration files.",
+    "type": "object",
+    "properties": {
+        "agents": {
+            "type": "array",
+            "description": "List of agent configurations.",
+            "items": { "type": "object" }
+        }
+    },
+    "required": ["agents"]
+}

@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+import('husky');
+import('child_process').then(({execSync})=>execSync('npm test',{stdio:'inherit'}));
