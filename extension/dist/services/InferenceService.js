@@ -1,9 +1,6 @@
-"use strict";
 // InferenceService provides LLM inference capabilities
 // See docs/Agent & API Documentation.md
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.InferenceService = void 0;
-class InferenceService {
+export class InferenceService {
     constructor() {
         // Initialize inference service
     }
@@ -29,4 +26,3 @@ class InferenceService {
         // TODO: implement adapter prewarming if using LoRA or similar
     }
 }
-exports.InferenceService = InferenceService;

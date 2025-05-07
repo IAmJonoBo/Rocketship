@@ -1,33 +1,32 @@
 // CLI entrypoint for Rocketship
 // See docs/Agent & API Documentation.md for command details
 import { Command } from 'commander';
-import { OrchestratorService } from '../../extension/src/services/OrchestratorService';
-import { ConfigService } from '../../extension/src/services/ConfigService';
-import { HybridRetrievalService } from '../../extension/src/services/HybridRetrievalService';
-import { InferenceService } from '../../extension/src/services/InferenceService';
-import { MemoryService } from '../../extension/src/services/MemoryService';
-import { TelemetryService } from '../../extension/src/services/TelemetryService';
-import { MetaLearningController } from '../../extension/src/services/MetaLearningController';
-import { PlannerAgent } from '../../extension/src/agents/PlannerAgent';
-import { CoderAgent } from '../../extension/src/agents/CoderAgent';
-import { CriticAgent } from '../../extension/src/agents/CriticAgent';
-import { TesterAgent } from '../../extension/src/agents/TesterAgent';
+import { OrchestratorService } from '@rocketship/core';
+import {
+  InferenceService,
+  HybridRetrievalService,
+  MemoryService,
+  TelemetryService,
+  MetaLearningController,
+  PlannerAgent,
+  CoderAgent,
+  CriticAgent,
+  TesterAgent
+} from 'rocketship-extension';
+
+const inference = new InferenceService();
+const orchestrator = new OrchestratorService(
+  new HybridRetrievalService(),
+  new PlannerAgent(inference),
+  new CoderAgent(inference),
+  new CriticAgent(inference),
+  new TesterAgent(),
+  new MemoryService(),
+  new TelemetryService(),
+  new MetaLearningController()
+);
 
 const program = new Command();
-const configSvc = new ConfigService();
-const retrieval = new HybridRetrievalService();
-const inference = new InferenceService();
-const memory = new MemoryService();
-const telemetry = new TelemetryService();
-const meta = new MetaLearningController();
-const planner = new PlannerAgent(inference);
-const coder = new CoderAgent(inference);
-const critic = new CriticAgent(inference);
-const tester = new TesterAgent();
-const orchestrator = new OrchestratorService(
-  configSvc, retrieval, inference, memory, telemetry, meta,
-  planner, coder, critic, tester
-);
 
 program
   .name('rocketship')
@@ -79,7 +78,7 @@ program
     try {
       const code = await import('fs/promises').then(fs => fs.readFile(opts.file, 'utf-8'));
       const token = { isCancellationRequested: false } as any;
-      const { testResults } = await tester.execute({ code, testFramework: 'jest', sessionId: 'cli' }, token);
+      const { testResults } = await orchestrator.runWorkflow({ code, language: 'ts', testFramework: 'jest' }, token);
       console.table(testResults);
     } catch (err) {
       console.error('Error:', err);

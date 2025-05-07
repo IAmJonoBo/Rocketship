@@ -2,7 +2,7 @@
 // See docs/Agent & API Documentation.md
 
 import { CancellationToken } from 'vscode';
-import { InferenceService } from '../services/InferenceService';
+import { InferenceService } from '../services/InferenceService.js';
 
 export interface CriticAgentParams {
   code: string;
@@ -37,9 +37,14 @@ Output a JSON object with "feedback" and "issues" (each with line, message, seve
 }
 `;
     const result = await this.inference.callModel({ prompt }, token);
-    let critique;
-    try { critique = JSON.parse(result.text) as CriticAgentResponse; }
-    catch { throw new Error('CriticAgent: Failed to parse JSON response'); }
-    return critique;
+    try {
+      const parsed = JSON.parse(result.text);
+      if (typeof parsed.feedback !== 'string' || !Array.isArray(parsed.issues)) {
+        throw new Error('Invalid CriticAgent schema');
+      }
+      return parsed;
+    } catch (err: any) {
+      throw new Error(`CriticAgent JSON parse error: ${err.message}`);
+    }
   }
 }

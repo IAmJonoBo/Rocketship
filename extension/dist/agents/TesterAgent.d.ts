@@ -16,3 +16,4 @@ export declare class TesterAgent {
     constructor();
     execute(params: TesterAgentParams, token: CancellationToken): Promise<TesterAgentResponse>;
 }
+//# sourceMappingURL=TesterAgent.d.ts.map

@@ -1,6 +1,6 @@
 import { CancellationToken } from 'vscode';
 import { ContextChunk } from '@rocketship/shared';
-import { InferenceService } from '../services/InferenceService';
+import { InferenceService } from '../services/InferenceService.js';
 /**
  * PlannerAgentParams:
  * - requirementText: user‐provided spec
@@ -25,3 +25,4 @@ export declare class PlannerAgent {
     constructor(inference: InferenceService);
     execute(params: PlannerAgentParams, token: CancellationToken): Promise<PlannerAgentResponse>;
 }
+//# sourceMappingURL=PlannerAgent.d.ts.map

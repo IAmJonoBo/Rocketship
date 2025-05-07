@@ -1,9 +1,16 @@
-"use strict";
 // OrchestratorService coordinates agent workflows
 // See docs/Architectural Documentation.md
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.OrchestratorService = void 0;
-class OrchestratorService {
+export class OrchestratorService {
+    configService;
+    retrieval;
+    inference;
+    memory;
+    telemetry;
+    metaLearning;
+    planner;
+    coder;
+    critic;
+    tester;
     constructor(configService, retrieval, inference, memory, telemetry, metaLearning, planner, coder, critic, tester) {
         this.configService = configService;
         this.retrieval = retrieval;
@@ -60,4 +67,3 @@ class OrchestratorService {
         return { plan, code, critique, testResults };
     }
 }
-exports.OrchestratorService = OrchestratorService;

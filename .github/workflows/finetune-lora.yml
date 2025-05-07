@@ -1,0 +1,13 @@
+name: 'LoRA Fine-Tune'
+on:
+  schedule:
+    - cron: '0 4 * * 0'  # Runs every Sunday at 04:00 UTC
+jobs:
+  finetune:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+      - run: pnpm install
+      - run: pnpm --filter @rocketship/core run node packages/core/scripts/finetune-lora.js
+      - run: echo "LoRA fine-tune complete"

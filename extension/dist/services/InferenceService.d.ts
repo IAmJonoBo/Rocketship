@@ -28,3 +28,4 @@ export declare class InferenceService {
      */
     prewarmAdapter(adapterId: string): Promise<void>;
 }
+//# sourceMappingURL=InferenceService.d.ts.map

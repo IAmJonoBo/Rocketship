@@ -1,5 +1,5 @@
 import { CancellationToken } from 'vscode';
-import { InferenceService } from '../services/InferenceService';
+import { InferenceService } from '../services/InferenceService.js';
 export interface CriticAgentParams {
     code: string;
     tests?: string[];
@@ -18,3 +18,4 @@ export declare class CriticAgent {
     constructor(inference: InferenceService);
     execute(params: CriticAgentParams, token: CancellationToken): Promise<CriticAgentResponse>;
 }
+//# sourceMappingURL=CriticAgent.d.ts.map

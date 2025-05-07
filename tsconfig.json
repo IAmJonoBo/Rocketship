@@ -1,8 +1,16 @@
 {
   "files": [],
   "references": [
-    { "path": "shared" },
-    { "path": "extension" },
-    { "path": "cli" }
-  ]
+    { "path": "./shared" },
+    { "path": "./packages/core" },
+    { "path": "./extension" },
+    { "path": "./cli" }
+  ],
+  "compilerOptions": {
+    "module": "NodeNext",
+    "target": "ES2022",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true
+  }
 }

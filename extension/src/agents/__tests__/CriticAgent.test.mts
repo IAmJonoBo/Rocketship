@@ -1,38 +1,33 @@
-import { CriticAgent } from '../CriticAgent';
-import { InferenceService } from '../../services/InferenceService';
-import { CancellationToken } from 'vscode';
+import { describe, beforeEach, afterEach, test, expect, jest } from '@jest/globals';
+import { CriticAgent } from '../CriticAgent.js';
+import { InferenceService } from '../../services/InferenceService.js';
 
-jest.mock('../../services/InferenceService');
-
-describe('CriticAgent', () => {
+describe('CriticAgent (ESM)', () => {
   let agent: CriticAgent;
-  const token = { isCancellationRequested: false } as CancellationToken;
+  let inferSpy: jest.MockedFunction<any>;
 
   beforeEach(() => {
     agent = new CriticAgent(new InferenceService());
+    // Spy on the instance method via the prototype
+    inferSpy = jest.spyOn(InferenceService.prototype, 'callModel') as any;
+    inferSpy.mockResolvedValue({ text: JSON.stringify({ feedback: 'All checks passed.', issues: [] }) } as any);
   });
 
-  it('parses valid JSON', async () => {
-    (InferenceService.prototype.callModel as jest.Mock).mockResolvedValue({
-      text: JSON.stringify({ feedback: 'OK', issues: [] })
-    });
-    const res = await agent.execute({ code: 'x=1', tests: [], sessionId: 's1' }, token);
-    expect(res.feedback).toBe('OK');
-    expect(Array.isArray(res.issues)).toBe(true);
+  afterEach(() => {
+    // Restore original implementation
+    inferSpy.mockRestore();
   });
 
-  it('throws on malformed JSON', async () => {
-    (InferenceService.prototype.callModel as jest.Mock).mockResolvedValue({ text: 'not json' });
-    await expect(agent.execute({ code: '', sessionId: 's1' }, token))
-      .rejects.toThrow('CriticAgent: Failed to parse JSON response');
+  test('returns feedback and issues', async () => {
+    const result = await agent.execute({ code: 'const x = 1;', sessionId: 'test' } as any, {} as any);
+    expect(result.feedback).toBe('All checks passed.');
+    expect(result.issues).toEqual([]);
   });
 
-  it('aborts if cancelled', async () => {
-    token.isCancellationRequested = true;
-    (InferenceService.prototype.callModel as jest.Mock).mockResolvedValue({ text: '{}' });
-    // You may want to throw or return early in your agent if cancelled
-    // For now, just ensure it still runs (customize as needed)
-    const res = await agent.execute({ code: '', sessionId: 's1' }, token);
-    expect(res).toBeDefined();
+  test('throws on malformed JSON', async () => {
+    inferSpy.mockResolvedValue({ text: '{"feedback": "oops", "issues": [}' } as any);
+    await expect(agent.execute({ code: 'const x = 1;', sessionId: 'test' } as any, {} as any))
+      .rejects
+      .toThrow(/CriticAgent JSON parse error/);
   });
 });

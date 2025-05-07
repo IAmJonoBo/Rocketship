@@ -1,9 +1,6 @@
-"use strict";
 // HybridRetrievalService provides data retrieval capabilities
 // See docs/Data & Retrieval Pipeline Documentation.md
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.HybridRetrievalService = void 0;
-class HybridRetrievalService {
+export class HybridRetrievalService {
     constructor() {
         // Initialize retrieval service
     }
@@ -15,4 +12,3 @@ class HybridRetrievalService {
         return [];
     }
 }
-exports.HybridRetrievalService = HybridRetrievalService;

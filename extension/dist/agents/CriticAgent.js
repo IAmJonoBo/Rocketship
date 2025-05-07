@@ -1,9 +1,7 @@
-"use strict";
 // CriticAgent is responsible for reviewing and critiquing code
 // See docs/Agent & API Documentation.md
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CriticAgent = void 0;
-class CriticAgent {
+export class CriticAgent {
+    inference;
     constructor(inference) {
         this.inference = inference;
     }
@@ -37,4 +35,3 @@ Output a JSON object with "feedback" and "issues" (each with line, message, seve
         return critique;
     }
 }
-exports.CriticAgent = CriticAgent;

@@ -1,9 +1,6 @@
-"use strict";
 // TesterAgent is responsible for running and evaluating tests
 // See docs/Agent & API Documentation.md
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TesterAgent = void 0;
-class TesterAgent {
+export class TesterAgent {
     constructor() {
         // Initialize tester
     }
@@ -12,4 +9,3 @@ class TesterAgent {
         return { testResults: [] };
     }
 }
-exports.TesterAgent = TesterAgent;

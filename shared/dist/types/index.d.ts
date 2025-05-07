@@ -20,3 +20,4 @@ export interface ReflectionReport {
     insights?: string[];
     actions?: string[];
 }
+//# sourceMappingURL=index.d.ts.map

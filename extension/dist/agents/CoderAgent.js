@@ -1,9 +1,7 @@
-"use strict";
 // CoderAgent is responsible for generating code
 // See docs/Agent & API Documentation.md
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.CoderAgent = void 0;
-class CoderAgent {
+export class CoderAgent {
+    inference;
     constructor(inference) {
         this.inference = inference;
     }
@@ -30,4 +28,3 @@ Please provide only ${params.language} code. Do not include explanations or comm
         };
     }
 }
-exports.CoderAgent = CoderAgent;

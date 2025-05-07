@@ -1,6 +1,6 @@
 import { CancellationToken } from 'vscode';
 import { ContextChunk } from '@rocketship/shared';
-import { InferenceService } from '../services/InferenceService';
+import { InferenceService } from '../services/InferenceService.js';
 export interface CoderAgentParams {
     taskId: string;
     codeContext: string;
@@ -18,3 +18,4 @@ export declare class CoderAgent {
     constructor(inference: InferenceService);
     execute(params: CoderAgentParams, token: CancellationToken): Promise<CoderAgentResponse>;
 }
+//# sourceMappingURL=CoderAgent.d.ts.map

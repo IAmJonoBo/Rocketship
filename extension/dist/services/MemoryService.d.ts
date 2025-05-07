@@ -9,3 +9,4 @@ export declare class MemoryService {
      */
     appendMemory(record: MemoryRecord): Promise<void>;
 }
+//# sourceMappingURL=MemoryService.d.ts.map

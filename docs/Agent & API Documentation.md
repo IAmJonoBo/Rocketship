@@ -1,5 +1,4 @@
 
-
 # Agent & API Documentation
 
 This document defines the interface specifications for each agent, provides a reference for core extension and CLI APIs, and details activation patterns and security scopes for the VS Code extension.
@@ -9,6 +8,7 @@ This document defines the interface specifications for each agent, provides a re
 ## 1. Agent Interface Specification
 
 ### 1.1 PlannerAgent
+
 **Purpose:** Analyze requirements and generate structured task lists.
 
 ```ts
@@ -37,6 +37,7 @@ interface PlannerAgent {
 - **Response Schema:** List of tasks with id, description, priority, and optional metadata.
 
 ### 1.2 CoderAgent
+
 **Purpose:** Generate or modify code based on tasks or specifications.
 
 ```ts
@@ -65,6 +66,7 @@ interface CoderAgent {
 - **Response Schema:** `code`, optional `diff`, and metadata.
 
 ### 1.3 CriticAgent
+
 **Purpose:** Evaluate code or tasks and provide structured feedback.
 
 ```ts
@@ -93,6 +95,7 @@ interface CriticAgent {
 - **Response Schema:** `feedback` and list of issues.
 
 ### 1.4 TesterAgent
+
 **Purpose:** Generate and run tests, then report results.
 
 ```ts
@@ -127,6 +130,7 @@ interface TesterAgent {
 ### 2.1 Core Services
 
 #### ConfigService
+
 - **loadConfig():** `Promise<Config>`
 - **onDidChangeConfig:** `Event<Config>`
 - **Errors:**
@@ -145,40 +149,49 @@ try {
   }
 }
 ```
+
 </details>
 
 #### PluginManager
+
 - **listPlugins():** `PluginInfo[]`
 - **activatePlugin(id: string):** `Promise<void>`
 - **deactivatePlugin(id: string):** `Promise<void>`
 
 #### OrchestratorService
+
 - **runWorkflow(workflow: WorkflowDefinition, token: CancellationToken):** `Promise<WorkflowResult>`
 - **Errors:**
   - `WorkflowExecutionError` (includes `failedStep` and `cause`)
 
 #### HybridRetrievalService
+
 - **retrieve(query: string, options?: RetrievalOptions):** `Promise<ContextChunk[]>`
 
 #### InferenceService
+
 - **callModel(request: ModelRequest):** `Promise<ModelResponse>`
 - **prewarmAdapter(adapterId: string):** `Promise<void>`
 
 #### MemoryService
+
 - **getSessionMemory(sessionId: string):** `MemoryRecord[]`
 - **getPersistentMemory(key: string):** `MemoryRecord[]`
 - **appendMemory(record: MemoryRecord):** `Promise<void>`
 
 #### MetaLearningController
+
 - **updateAdapters(data: TrainingData):** `Promise<void>`
 - **recordFeedback(context: FeedbackContext):** `void`
 - **runReflexion(result: WorkflowResult):** `Promise<ReflectionReport>`
 
 #### TelemetryService
+
 - **trackEvent(name: string, properties?: Record<string, any>):** `void`
 - **flush():** `Promise<void>`
 
 #### SecretStorageManager
+
 - **getSecret(key: string):** `Promise<string | undefined>`
 - **storeSecret(key: string, value: string):** `Promise<void>`
 
@@ -199,6 +212,7 @@ try {
 ```bash
 npx rocketship plan --input specs.md --output plan.json
 ```
+
 </details>
 
 ---
@@ -206,6 +220,7 @@ npx rocketship plan --input specs.md --output plan.json
 ## 3. Extension Activation & Commands
 
 ### 3.1 Activation Events (package.json)
+
 ```jsonc
 "activationEvents": [
   "onCommand:rocketship.plan",
@@ -217,6 +232,7 @@ npx rocketship plan --input specs.md --output plan.json
 ```
 
 ### 3.2 Contributed Commands
+
 ```jsonc
 "contributes": {
   "commands": [
@@ -245,6 +261,7 @@ npx rocketship plan --input specs.md --output plan.json
 ```
 
 ### 3.3 Command Security Scopes
+
 - **rocketship.plan:** Requires workspace read and write access.
 - **rocketship.code:** Requires ability to modify workspace files.
 - **rocketship.test:** Requires execution permission for test frameworks.

@@ -1,9 +1,6 @@
-"use strict";
 // MetaLearningController adapts agent behavior based on feedback
 // See docs/Architectural Documentation.md
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.MetaLearningController = void 0;
-class MetaLearningController {
+export class MetaLearningController {
     constructor() {
         // Initialize meta-learning controller
     }
@@ -21,4 +18,3 @@ class MetaLearningController {
         return {};
     }
 }
-exports.MetaLearningController = MetaLearningController;

@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "RocketshipError",
+  "type": "object",
+  "properties": {
+    "code": { "type": "string" },
+    "message": { "type": "string" },
+    "context": { "type": "object" }
+  },
+  "required": ["code", "message", "context"]
+}

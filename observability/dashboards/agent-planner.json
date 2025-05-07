@@ -1,0 +1,19 @@
+{
+  "title": "Agent Planner Dashboard",
+  "panels": [
+    {
+      "type": "graph",
+      "title": "Planner Latency (ms)",
+      "targets": [
+        { "expr": "planner_duration_ms" }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "95th Percentile Latency",
+      "targets": [
+        { "expr": "histogram_quantile(0.95, sum(rate(planner_duration_ms_bucket[5m])) by (le))" }
+      ]
+    }
+  ]
+}

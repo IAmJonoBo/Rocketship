@@ -10,3 +10,4 @@ export declare class TelemetryService {
      */
     flush(): Promise<void>;
 }
+//# sourceMappingURL=TelemetryService.d.ts.map

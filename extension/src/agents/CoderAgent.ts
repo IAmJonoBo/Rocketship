@@ -3,7 +3,7 @@
 
 import { CancellationToken } from 'vscode';
 import { ContextChunk } from '@rocketship/shared';
-import { InferenceService } from '../services/InferenceService';
+import { InferenceService } from '../services/InferenceService.js';
 
 export interface CoderAgentParams {
   taskId: string;

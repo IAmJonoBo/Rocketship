@@ -1,9 +1,6 @@
-"use strict";
 // TelemetryService handles logging and metrics
 // See docs/Observability & Telemetry Guides.md
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.TelemetryService = void 0;
-class TelemetryService {
+export class TelemetryService {
     constructor() {
         // Initialize telemetry
     }
@@ -23,4 +20,3 @@ class TelemetryService {
         // TODO: implement flush logic
     }
 }
-exports.TelemetryService = TelemetryService;

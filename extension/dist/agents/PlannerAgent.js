@@ -1,9 +1,7 @@
-"use strict";
 // PlannerAgent is responsible for planning tasks
 // See docs/Agent & API Documentation.md
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.PlannerAgent = void 0;
-class PlannerAgent {
+export class PlannerAgent {
+    inference;
     constructor(inference) {
         this.inference = inference;
     }
@@ -42,4 +40,3 @@ Example:
         return { tasks, metadata: { model: result.modelId } };
     }
 }
-exports.PlannerAgent = PlannerAgent;

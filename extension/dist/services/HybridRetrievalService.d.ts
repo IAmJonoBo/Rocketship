@@ -6,3 +6,4 @@ export declare class HybridRetrievalService {
      */
     retrieve(query: string, options?: any): Promise<ContextChunk[]>;
 }
+//# sourceMappingURL=HybridRetrievalService.d.ts.map
