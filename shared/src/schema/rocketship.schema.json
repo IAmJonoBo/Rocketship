@@ -60,11 +60,36 @@
               "type": "boolean",
               "default": true,
               "description": "Enable or disable this agent."
+            },
+            "defense": {
+              "type": "object",
+              "properties": {
+                "retries": {
+                  "type": "integer"
+                },
+                "schemaValidation": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "whileLoading": {
+              "type": "object",
+              "properties": {
+                "action": {
+                  "type": "string"
+                },
+                "pollEvery": {
+                  "type": "integer"
+                }
+              },
+              "additionalProperties": false
             }
           },
-          "additionalProperties": false
+          "additionalProperties": true
         }
-      }
+      },
+      "additionalProperties": true
     },
     "retrieval": {
       "type": "object",
@@ -101,8 +126,42 @@
         }
       },
       "additionalProperties": false
+    },
+    "supervisor": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "tools": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "caching": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "rateLimits": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "devices": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": ["auto"]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    },
+    "monitoring": {
+      "type": "object",
+      "additionalProperties": true
     }
   },
   "required": ["global", "agents", "retrieval"],
-  "additionalProperties": false
+  "additionalProperties": true
 }
