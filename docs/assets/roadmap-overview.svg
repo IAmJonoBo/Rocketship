@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="900" height="220" viewBox="0 0 900 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-labelledby="rocketship-roadmap-title rocketship-roadmap-desc" role="img">
+  <title id="rocketship-roadmap-title">Rocketship Roadmap Phases</title>
+  <desc id="rocketship-roadmap-desc">A high-level diagram showing the sequence of Rocketship's project phases: Stabilisation, Test & Schema, Prompt Governance & RAG, CI/CD & Observability, Advanced Services, and Maintenance.</desc>
+  <defs>
+    <linearGradient id="cyanMagenta" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00fff7"/>
+      <stop offset="100%" stop-color="#ff00ea"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="900" height="220" rx="28" fill="#23232b"/>
+  <!-- Phases -->
+  <g font-family="Segoe UI, Arial, sans-serif" font-weight="bold">
+    <rect x="30" y="60" width="140" height="60" rx="16" fill="#18181f" stroke="#00fff7" stroke-width="3" filter="url(#glow)"/>
+    <text x="100" y="90" text-anchor="middle" font-size="17" fill="#00fff7">Stabilisation</text>
+    <text x="100" y="110" text-anchor="middle" font-size="13" fill="#fff">& Structure</text>
+
+    <rect x="190" y="60" width="140" height="60" rx="16" fill="#18181f" stroke="#ff00ea" stroke-width="3" filter="url(#glow)"/>
+    <text x="260" y="90" text-anchor="middle" font-size="17" fill="#ff00ea">Test & Schema</text>
+    <text x="260" y="110" text-anchor="middle" font-size="13" fill="#fff">Integration</text>
+
+    <rect x="350" y="60" width="140" height="60" rx="16" fill="#18181f" stroke="#00fff7" stroke-width="3" filter="url(#glow)"/>
+    <text x="420" y="90" text-anchor="middle" font-size="17" fill="#00fff7">Prompt Gov.</text>
+    <text x="420" y="110" text-anchor="middle" font-size="13" fill="#fff">& RAG</text>
+
+    <rect x="510" y="60" width="140" height="60" rx="16" fill="#18181f" stroke="#ff00ea" stroke-width="3" filter="url(#glow)"/>
+    <text x="580" y="90" text-anchor="middle" font-size="17" fill="#ff00ea">CI/CD, Obs.</text>
+    <text x="580" y="110" text-anchor="middle" font-size="13" fill="#fff">& Security</text>
+
+    <rect x="670" y="60" width="140" height="60" rx="16" fill="#18181f" stroke="#00fff7" stroke-width="3" filter="url(#glow)"/>
+    <text x="740" y="90" text-anchor="middle" font-size="17" fill="#00fff7">Advanced</text>
+    <text x="740" y="110" text-anchor="middle" font-size="13" fill="#fff">Services & Plugins</text>
+
+    <rect x="830" y="60" width="40" height="60" rx="16" fill="#18181f" stroke="#ff00ea" stroke-width="3" filter="url(#glow)"/>
+    <text x="850" y="90" text-anchor="middle" font-size="17" fill="#ff00ea">Maint.</text>
+    <text x="850" y="110" text-anchor="middle" font-size="13" fill="#fff">& Review</text>
+  </g>
+  <!-- Arrows -->
+  <g stroke="url(#cyanMagenta)" stroke-width="4" marker-end="url(#arrowhead)">
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#00fff7"/>
+      </marker>
+    </defs>
+    <line x1="170" y1="90" x2="190" y2="90"/>
+    <line x1="330" y1="90" x2="350" y2="90"/>
+    <line x1="490" y1="90" x2="510" y2="90"/>
+    <line x1="650" y1="90" x2="670" y2="90"/>
+    <line x1="810" y1="90" x2="830" y2="90"/>
+  </g>
+  <!-- Legend -->
+  <rect x="30" y="150" width="840" height="40" rx="12" fill="#23232b" stroke="url(#cyanMagenta)" stroke-width="2"/>
+  <text x="450" y="175" text-anchor="middle" font-size="14" fill="#fff">Cyan = Core/Prompt/RAG/Advanced, Magenta = Test/CI/CD/Maintenance, White = Details, Charcoal = System Boundary</text>
+</svg>

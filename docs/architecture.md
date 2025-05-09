@@ -1,5 +1,10 @@
 # Architecture
 
+> **For the canonical implementation plan and actionable details, see:**
+> - [Feature_Enhancements.md](../Feature_Enhancements.md)
+> - [docs/roadmap.md](roadmap.md)
+> - [TODO.md](../TODO.md)
+
 > **Note:** The codebase has undergone a mass refactor for DRY, YAGNI, and canonical structure. See [CHANGELOG.md](../CHANGELOG.md) for the canonical structure and refactor principles. All architecture and organization now follow these standards.
 
 ## Tech Stack (2024)
@@ -27,6 +32,59 @@ This document consolidates Rocketship's high-level architecture, diagrams, ADRs,
 > **Terminology Note:** For definitions of agents, services, and plugins, see the [Rocketship Glossary](glossary.md).
 > **Advanced Services:** See new sections below for ModelAdvisor, BanditController, ReflexionAgent, and PKGService details.
 ---
+
+## System Architecture Overview
+
+![Rocketship System Architecture](assets/architecture-overview.svg)
+*Figure: High-level system architecture. See below for Mermaid source and details.*
+
+<details>
+<summary>Mermaid Diagram (for quick edits)</summary>
+
+```mermaid
+graph TD
+  subgraph VSCode[VS Code Extension]
+    A1[UI & Commands]
+    A2[Extension Host]
+  end
+  subgraph CLI[CLI Companion]
+    B1[CLI Entrypoint]
+  end
+  subgraph Core[Core Services]
+    C1[OrchestratorService]
+    C2[Agents]
+    C3[MemoryService]
+    C4[PKGService]
+    C5[RetrievalService]
+    C6[PluginManager]
+  end
+  D1[Vector Store (LanceDB)]
+  D2[Knowledge Graph (PKG)]
+  E1[Observability & Telemetry]
+  F1[External APIs/LLMs]
+
+  A1 --> A2
+  A2 --> C1
+  B1 --> C1
+  C1 --> C2
+  C1 --> C3
+  C1 --> C4
+  C1 --> C5
+  C1 --> C6
+  C3 --> D1
+  C4 --> D2
+  C5 --> D1
+  C5 --> D2
+  C6 --> F1
+  C2 --> F1
+  C1 --> E1
+  C2 --> E1
+  C3 --> E1
+  C4 --> E1
+  C5 --> E1
+  C6 --> E1
+```
+</details>
 
 ## Advanced Services
 
@@ -193,3 +251,55 @@ This pipeline enables fast, adaptive retrieval-augmented generation (RAG) for al
 - **Sample Template:** See `sample-agent.tpl` for a reference prompt with version and timestamp.
 
 This process ensures prompt quality, traceability, and safe evolution of agent instructions.
+
+## Integration & Technical Plan (2024)
+
+Rocketship's architecture is now guided by the Integration & Technical Plan, which synthesizes the latest research and best practices for agentic automation. Key enhancements include:
+- Graph-based, multi-agent orchestration (Plan→Dispatch→Resolve)
+- Unified MemoryService (vector + knowledge graph)
+- Dynamic ToolRegistry with circuit breaking and runtime registration
+- CriticAgent, ReflectionAgent, and feedback loops
+- Explainability, audit logging, and human-in-the-loop (HITL) checkpoints
+- OpenTelemetry-based observability and dashboards
+- Prompt metadata, evaluation, and governance
+- Strict modularity, performance, and extension points
+
+For full details, see [Feature_Enhancements.md](../Feature_Enhancements.md).
+
+## OrchestratorService (2024)
+
+- Now implements a graph/state-machine model for Plan→Dispatch→Resolve workflows.
+- Supports dynamic agent roles (Planner, Critic, Executor, ReflectionAgent) and message-passing.
+- Task queueing and orchestration are natively implemented for extensibility and speed.
+
+## Memory & Knowledge (2024)
+
+- Unified MemoryService abstracts both vector (LanceDB) and knowledge graph (TypeScript-native or adapter) storage.
+- Agents can query both vector and graph memory for richer, relational context.
+- PKGService provides property graph queries for codebase understanding.
+
+## ToolRegistry (2024)
+
+- Refactored for runtime registration, discovery, and removal of tools.
+- Integrates Opossum for circuit breaking and retries.
+- Exposes a simple API for agent tool discovery and invocation.
+
+## Agentic Enhancements (2024)
+
+- CriticAgent and ReflectionAgent are first-class agent types for self-critique and feedback loops.
+- All agent outputs include rationale and decision trace fields.
+- Human-in-the-loop (HITL) checkpoints are implemented as middleware in orchestration.
+
+## Observability & Telemetry (2024)
+
+- All core services and agents are instrumented with OpenTelemetry.
+- Minimal dashboard (VS Code webview or web UI) provides real-time monitoring.
+- Audit logging and error tracking are centralized for compliance and review.
+
+## Prompt Governance (2024)
+
+- Prompt templates include metadata (version, timestamp, usage stats).
+- Prompt evaluation and A/B testing are integrated into CI.
+- Prompt performance and user feedback are logged for continuous improvement.
+
+> **For the full, living plan and rationale, see [Feature_Enhancements.md](../Feature_Enhancements.md).**

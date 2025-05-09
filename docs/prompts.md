@@ -2,6 +2,29 @@
 
 > **Note:** This file consolidates and supersedes the previous 'Prompt Engineering Guidelines.md'.
 
+---
+
+![Prompt Engineering Lifecycle and Governance](assets/prompts-flow.svg)
+*Figure: The prompt engineering lifecycle in Rocketship, showing design, versioning, testing, deployment, monitoring, and iterative improvement, with agent/system prompt flows and governance checkpoints. All diagrams are accessible and follow Rocketship's visual standards.*
+
+```mermaid
+flowchart TD
+  A[Design Prompt] --> B[Version & Register]
+  B --> C[Test & Evaluate]
+  C --> D[Deploy to Agents]
+  D --> E[Monitor Performance]
+  E --> F[Iterate & Refine]
+  F --> A
+  subgraph Governance
+    B
+    C
+    E
+  end
+```
+*Figure: Mermaid diagram of the prompt engineering workflow, including governance and feedback loops. Alt: Flow from design to versioning, testing, deployment, monitoring, and iteration.*
+
+---
+
 Effective prompt engineering hinges on clarity, context, and iterative refinement. Core principles—such as specificity, role definition, and structured prompting—lay the foundation for reliable model behavior. Advanced techniques like chain-of-thought, few-shot prompting, and reflexive self-evaluation boost reasoning and resilience to hallucinations. Responsible practices, including bias mitigation, prompt safety, and modular template management, ensure ethical and maintainable workflows. Rigorous testing, A/B experimentation, and metrics-driven optimization complete a disciplined prompt engineering lifecycle that maximizes performance across use cases.
 
 ## 1. Core Principles
@@ -82,3 +105,43 @@ Store shared prompt templates and best practices in a centralized "prompts" repo
 - agents.md
 - architecture.md
 - onboarding.md
+
+## 8. Development Prompt Library
+
+> **For implementation and integration guidance, see also:**
+> - [Feature_Enhancements.md](../Feature_Enhancements.md)
+> - [architecture.md](architecture.md)
+
+This section collects actionable, staged prompts and code snippets for LLM agents and developers, distilled from the integration and implementation strategy. Use these as scaffolding or reference for automating best-practice workflows.
+
+### Stage 1: Verify Monorepo Integrity & ESM Build
+```
+Prompt: Verify all source files are tracked, clean build outputs, run composite build, and ensure ESM compliance in all packages. Correct tsconfig.json as needed for nodenext and ESM.
+```
+
+### Stage 2: Scaffold & Publish Shared and Core Packages
+```
+Prompt: Scaffold package.json and tsconfig.json for @rocketship/core and @rocketship/shared. Ensure correct exports, paths, and build steps. Build both packages and update root tsconfig.base.json paths.
+```
+
+### Stage 3: Inject Circuit-Breaker & Retry
+```
+Prompt: Install opossum, create CircuitBreakerFactory, and wrap agent execution in circuit breakers. Standardize error handling with RocketshipError interface.
+```
+
+### Stage 4: Enforce JSON-Schema Validation
+```
+Prompt: Install ajv, create and use JSON schemas for agent outputs, and validate outputs in each agent's execute method.
+```
+
+### Stage 5: Hybrid Retrieval & Vector Store
+```
+Prompt: Install @lancedb/sdk, implement HybridRetrievalService, connect to LanceDB, and enable semantic search and chunk deduplication.
+```
+
+### Stage 6: Sandboxed Inference with Testcontainers
+```
+Prompt: Install testcontainers, create TestSandbox helper, and run inference in isolated containers for safety and reproducibility.
+```
+
+> For more detailed, step-by-step prompts and code, see the project's integration plan and architecture documentation.

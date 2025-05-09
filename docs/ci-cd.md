@@ -1,10 +1,39 @@
 # CI/CD & Deployment
 
+> **For the canonical implementation plan and actionable details, see:**
+> - [Feature_Enhancements.md](../Feature_Enhancements.md)
+> - [roadmap.md](roadmap.md)
+> - [TODO.md](../TODO.md)
+
 > **Accessibility:** All diagrams and images include descriptive alt text. For feedback or accessibility requests, open an issue or email the maintainers. We strive for WCAG 2.1 AA compliance in all docs.
 
 > **Note:** This file consolidates and supersedes the previous 'CI-CD & Deployment Pipeline Documentation.md'.
 
-This document outlines Rocketship's CI/CD workflows, CLI companion runbook, and release management practices tailored for GitHub Actions and optional Jenkins integration.
+---
+
+![CI/CD Pipeline Overview](assets/ci-cd-flow.svg)
+*Figure: Rocketship's CI/CD pipeline, showing triggers, build, test, artifact upload, release, and feedback loops. All diagrams are accessible and follow Rocketship's visual standards.*
+
+```mermaid
+flowchart TD
+  A[Trigger (PR/Push/Schedule)] --> B[Build]
+  B --> C[Test]
+  C --> D[Artifact Upload]
+  D --> E[Release]
+  E --> F[Feedback & Badges]
+  F --> A
+  subgraph Automation
+    B
+    C
+    D
+    E
+  end
+```
+*Figure: Mermaid diagram of Rocketship's CI/CD workflow, including automation and feedback loops. Alt: Flow from trigger to build, test, artifact, release, and feedback.*
+
+---
+
+This document outlines Rocketship's CI/CD workflows, CLI companion runbook, and release management practices tailored for GitHub Actions and optional Jenkins integration. All CI/CD and deployment practices are now aligned with the Integration & Technical Plan and project priorities.
 
 ---
 

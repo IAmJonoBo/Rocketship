@@ -2,7 +2,29 @@
 
 > **Note:** This file consolidates and supersedes the previous 'Observability & Telemetry Guides.md'.
 
-This document defines Rocketship's observability architecture, covering metrics instrumentation, telemetry sampling, and dashboard/alert runbooks to ensure reliable monitoring and incident response.
+---
+
+![Observability Architecture and Feedback](assets/observability-flow.svg)
+*Figure: Rocketship's observability architecture, showing metrics instrumentation, telemetry, dashboards, alerting, and feedback loops. All diagrams are accessible and follow Rocketship's visual standards.*
+
+```mermaid
+flowchart TD
+  A[Metrics Instrumentation] --> B[Telemetry Sampling]
+  B --> C[Prometheus Exporter]
+  C --> D[Grafana Dashboards]
+  D --> E[Alerting]
+  E --> F[Incident Response]
+  F --> G[Continuous Improvement]
+  G --> A
+  subgraph Observability Controls
+    B
+    C
+    D
+    E
+    F
+  end
+```
+*Figure: Mermaid diagram of Rocketship's observability workflow, including controls and feedback loops. Alt: Flow from metrics to telemetry, dashboards, alerting, incident response, and improvement.*
 
 ---
 

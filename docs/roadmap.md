@@ -1,274 +1,203 @@
-# Project Roadmap
+# 🚀 Rocketship Project Roadmap
 
-> **Accessibility:** All diagrams and images include descriptive alt text. For feedback or accessibility requests, open an issue or email the maintainers. We strive for WCAG 2.1 AA compliance in all docs.
+> **For the canonical implementation plan and actionable tasks, see also:**
+> - [Feature_Enhancements.md](../Feature_Enhancements.md)
+> - [TODO.md](../TODO.md)
 
-> **Note:** This file consolidates and supersedes the previous 'Project_Roadmap.md'.
-
-> **Terminology Note:** For definitions of agents, services, and plugins, see the [Rocketship Glossary](glossary.md).
-
-## Vision & Objectives
-
-> **Vision:** Enable seamless, end-to-end software development automation within VS Code by leveraging multi-agent orchestration, hybrid retrieval (vector + knowledge graph), on-the-fly fine-tuning, and persistent memory for self-improving productivity.
-
-> **Objectives:**
->
-> 1. Automate Plan → Code → Test workflows with minimal user intervention.
-> 2. Architect a plugin-first, extensible model for advanced capabilities.
-> 3. Optimize for constrained hardware (e.g., M1 MacBook Pro).
-> 4. Enforce security, sandboxing, and auditability for compliance.
-
-## Project Execution Guidance
-
-Based on our alignment and sprint planning, please note the following execution assumptions and guidelines:
-
-1. **Solo Development with LLM Assistance**
-   This project will be driven by a solo developer augmented by multiple LLM coding assistants. Roles such as SRE, security, and compliance will be addressed within sprint planning as needed, leveraging best practices and standard protocols.
-
-2. **Continuous Improvement and Gap Recommendations**
-   Opportunities for improvements or gaps should be flagged at any stage. The roadmap remains flexible to incorporate enhancements or refinements without strict persona constraints, prioritizing a major release followed by incremental updates.
-
-3. **Development Baseline and Performance Thresholds**
-   Development is targeting an M1 MacBook Pro with 16GB RAM. First-use latency benchmarks should remain under 4 seconds for Plan → UI load. Performance metrics will be validated on this baseline.
-
-4. **Security, Compliance, and SOC 2 Planning**
-   Security and SOC 2 compliance tasks should be baked into sprint planning. Adopt European data protection standards (e.g., GDPR) for telemetry, memory, and audit-log handling.
-
-5. **CI/CD Platforms and Target Environments**
-   Primary CI pipelines will run on GitHub Actions and Jenkins. We will support self-hosted Linux and macOS initially, with Windows support scheduled for a subsequent phase.
-
-6. **Pilot Ownership and Triage**
-   The development team (the solo developer and the LLM assistants) will serve as the initial pilot group. Use discretionary triage to prioritise features and bugfixes based on ongoing feedback.
-
-7. **UX & Usability as Core Principles**
-   UX, user-friendliness, and actionable intelligence are non-negotiable pillars. Incorporate guided tours, in-IDE diagnostics, and clear documentation as part of each major feature.
-
-8. **Release Strategy**
-   We will aim for a major v1 release upon MVP completion, followed by unscheduled minor and patch releases to rapidly address feedback and improvements.
+This roadmap is the single source of truth for all completed, in-progress, and outstanding work. Tasks are grouped by phase, area, and priority, with dependencies, estimated effort, and quality gates. Update this file after every major batch of changes.
 
 ---
 
-## Project Plan
+## Roadmap Phases Overview
 
-(See full roadmap for detailed milestones and timelines.)
+![Rocketship Roadmap Phases](assets/roadmap-overview.svg)
+*Figure: High-level project phases and workflow. See below for Mermaid source and details.*
 
----
-
-## Quality Gates & CI Checks
-
-Rocketship's CI pipeline enforces:
-- **Dead Code Detection:** `ts-prune` flags unused exports in TypeScript.
-- **Circular Dependency Detection:** `madge` finds import cycles.
-- **Blocking Policy:** Both checks run on every push/PR and block merges on failure.
-
-See [architecture.md](architecture.md#quality-gates) for workflow diagrams and details.
-
----
-
-## Appendices: Visuals, Examples, and Glossary
-
-### Appendix A: Diagrams & Visuals
-
-#### A1: Plan → Code → Critique → Test Sequence
+<details>
+<summary>Mermaid Diagram (for quick edits)</summary>
 
 ```mermaid
-sequenceDiagram
-    participant User
-    participant VSCode
-    participant Orchestrator
-    participant Planner
-    participant Coder
-    participant Critic
-    participant Tester
-
-    User->>VSCode: Triggers "Plan" command
-    VSCode->>Orchestrator: Start workflow
-    Orchestrator->>Planner: execute(requirements)
-    Planner-->>Orchestrator: tasks
-    Orchestrator->>Coder: execute(tasks)
-    Coder-->>Orchestrator: code
-    Orchestrator->>Critic: execute(code)
-    Critic-->>Orchestrator: feedback/issues
-    Orchestrator->>Tester: execute(code)
-    Tester-->>Orchestrator: testResults
-    Orchestrator-->>VSCode: Display results
-    VSCode-->>User: Show plan, code, feedback, test results
+flowchart LR
+  A[Phase 1: Stabilisation & Structure] --> B[Phase 2: Test & Schema Integration]
+  B --> C[Phase 3: Prompt Governance & RAG]
+  C --> D[Phase 4: CI/CD, Observability, Security]
+  D --> E[Phase 5: Advanced Services & Plugin Extensibility]
+  E --> F[Phase 6: Ongoing Maintenance & Review]
+  style A fill:#23232b,stroke:#00fff7,stroke-width:3
+  style B fill:#23232b,stroke:#ff00ea,stroke-width:3
+  style C fill:#23232b,stroke:#00fff7,stroke-width:3
+  style D fill:#23232b,stroke:#ff00ea,stroke-width:3
+  style E fill:#23232b,stroke:#00fff7,stroke-width:3
+  style F fill:#23232b,stroke:#ff00ea,stroke-width:3
 ```
-![Plan-Code-Critique-Test Sequence](assets/roadmap-sequence-1.svg)
-
-#### A2: System Dependency Flow
-
-```mermaid
-graph TD;
-    SharedTypes["Shared Types/Schemas"]
-    Orchestrator["OrchestratorService"]
-    Planner["PlannerAgent"]
-    Coder["CoderAgent"]
-    Critic["CriticAgent"]
-    Tester["TesterAgent"]
-    HybridRetrieval["HybridRetrievalService"]
-    Inference["InferenceService"]
-    Memory["MemoryService"]
-    Telemetry["TelemetryService"]
-    MetaLearning["MetaLearningController"]
-    Extension["VS Code Extension"]
-    CLI["CLI Companion"]
-
-    SharedTypes --> Orchestrator
-    Orchestrator --> Planner
-    Orchestrator --> Coder
-    Orchestrator --> Critic
-    Orchestrator --> Tester
-    Orchestrator --> HybridRetrieval
-    Orchestrator --> Memory
-    Orchestrator --> Telemetry
-    Orchestrator --> MetaLearning
-    Planner --> HybridRetrieval
-    Planner --> Inference
-    Coder --> Inference
-    Critic --> Inference
-    Tester --> HybridRetrieval
-    Tester --> Inference
-    MetaLearning --> Memory
-    MetaLearning --> Inference
-    Extension --> Orchestrator
-    CLI --> Orchestrator
-```
-![System Dependency Flow](assets/roadmap-sequence-2.svg)
-
-### Appendix B: Prompt Example Templates
-
-#### B1: PlannerAgent Prompt Template
-
-```handlebars
-{{!--@promptVersion:{{gitSHA}}--}}
-You are a software planner agent. Given the following requirements, return a structured task list using the schema below.
-
-## Requirements
-{{requirements}}
-
-## Output Schema
-{
-  "tasks": [
-    { "id": string, "description": string, "priority": "high" | "medium" | "low" }
-  ]
-}
-```
-
-#### B2: CoderAgent Prompt Template
-
-```handlebars
-{{!--@promptVersion:{{gitSHA}}--}}
-You are a code generation agent. Use the task input and project metadata to generate functionally complete code blocks.
-
-## Task
-{{task}}
-
-## Code Context
-{{retrievedContext}}
-
-## Output Format
-```ts
-// Filename: {{filename}}
-{{generatedCode}}
-```
-```
-
-### Appendix C: Glossary
-
-| Term                       | Definition                                                                 |
-|----------------------------|----------------------------------------------------------------------------|
-| **Agent**                  | A specialised LLM-driven function (e.g., Planner, Coder, Tester).          |
-| **OrchestratorService**    | Core controller for agent workflows. Coordinates execution and DI.        |
-| **Hybrid Retrieval**       | Combines vector embeddings + PKG-based graph search for rich context.     |
-| **LoRA Adapter**           | Lightweight fine-tuning layer for domain adaptation of LLMs.              |
-| **Reflexion**              | A meta-cognitive self-review loop to improve outputs via learning.        |
-| **Ajv**                    | A fast JSON Schema validator used to validate inputs/outputs.             |
-| **Circuit Breaker**        | A resilience pattern to stop repeated failures (via Opossum).             |
-| **Prompt Governance**      | Version control, safety enforcement, and auditing of prompt templates.    |
-| **RAG**                    | Retrieval-Augmented Generation—injecting context into model prompts.      |
-| **TelemetryService**       | Captures usage and performance metrics for monitoring and optimisation.   |
-| **PKG (Programming KG)**   | A knowledge graph built from code structure: functions, imports, classes. |
-
-### Appendix D: Sample `rocketship.yaml` Configuration
-
-```yaml
-version: 1
-agents:
-  planner:
-    enabled: true
-    promptTemplate: planner-agent.tpl
-    outputSchema: planner-agent.schema.json
-
-  coder:
-    enabled: true
-    promptTemplate: coder-agent.tpl
-    outputSchema: coder-agent.schema.json
-
-retrieval:
-  method: hybrid
-  vectorStore: lance
-  chunkSize: 300
-  deduplication: true
-
-model:
-  backend: local
-  quantization: q4_0
-  router:
-    strategy: adaptive
-    fallback: mistral-7b-instruct
-
-telemetry:
-  enabled: true
-  endpoint: http://localhost:9464/metrics
-```
-
-## User Personas & Stories
-
-| Persona           | User Story                                                                                  | Roadmap Milestone(s)         |
-|-------------------|--------------------------------------------------------------------------------------------|------------------------------|
-| Novice Developer  | Generate unit-test templates for functions to quickly validate edge cases.                 | Stage 2, Milestone 2.1, 2.3  |
-| AI-Power User     | Fine-tune the base model with code style via LoRA adapters for team convention alignment.   | Stage 5, Milestone 5.2, 5.4  |
-| DevOps Engineer   | Use headless CLI in CI to automate plan/code/test validation on PRs.                       | Stage 4, Milestone 4.2, 4.3  |
+</details>
 
 ---
 
-## Use-Case Catalog Mapping
+## Milestone Summary Table
 
-| ID  | Title                        | Roadmap Stage(s) / Milestone(s)         | MVP?   |
-|-----|------------------------------|-----------------------------------------|--------|
-| UC1 | Requirement Analysis         | Stage 2.1, 2.3                          | Yes    |
-| UC2 | Contextual Code Generation   | Stage 2.1, 2.3, 5.4                     | Yes    |
-| UC3 | Automated Testing            | Stage 2.1, 2.3, 4.1                     | Yes    |
-| UC4 | On-the-Fly Fine-Tuning       | Stage 5.2, 5.4                          | v2+    |
-| UC5 | Adaptive Model Selection     | Stage 5.2                               | v2+    |
-| UC6 | Long-Term Session Memory     | Stage 5.3                               | v2+    |
-| UC7 | Self-Reflection & Meta-Opt.  | Stage 5.3                               | v2+    |
-
----
-
-## Scope Boundaries
-
-- **In-Scope (v1 MVP):** UC1, UC2, UC3; core services, vector-only retrieval, session memory, Planner/Coder/Tester Agents, VS Code UI, CLI.
-- **Out-of-Scope (v1 MVP):** UC4–UC7; advanced PKG, LoRA, Bandits, persistent memory, Reflexion, plugin registry, SOC 2 compliance.
-- **v2+ Additions:** UC4–UC7, PKG schema, SOC 2 audit-log storage, telemetry dashboards.
+| Phase | Milestone/Deliverable                        | Est. Effort | Quality Gates                |
+|-------|----------------------------------------------|-------------|------------------------------|
+| 1     | Codebase Stabilisation & Structure           | 2–3 days    | Lint, ESM, DRY, docs review  |
+| 2     | Test & Schema Integration                   | 3–4 days    | ≥80% coverage, schema val.   |
+| 3     | Prompt Governance & RAG Foundation           | 2–3 days    | Prompt lint, RAG telemetry   |
+| 4     | CI/CD, Observability, Security               | 1 week      | CI green, SAST, dashboards   |
+| 5     | Advanced Services & Plugin Extensibility     | 1 week+     | Plugin tests, doc coverage   |
+| 6     | Ongoing Maintenance & Review                 | Ongoing     | Recurring reviews, docs sync |
 
 ---
 
-## Global Acceptance Criteria
+## Phase 1: Codebase Stabilisation & Structure
 
-- **Functional:** Each use case must have automated tests covering end-to-end flows with ≥80% code coverage.
-- **Performance:** Activation to first Plan panel load <2s on M1 Mac; code generation latency <3s per 512-token request.
-- **Security:** No CLI command or extension activation should expose secrets in logs; models must be checksum-verified pre-load.
+**Tasks:**
+- [x] Adopt Nx, pnpm, Vitest; remove legacy tools
+- [x] Standardize ESM build, TypeScript config, and workspace structure
+- [x] Scaffold all core and advanced agents/services with canonical interfaces and TODOs
+- [x] Update all major docs to reflect current stack and structure
+- [x] Confirm all shared types, helpers, and schemas are centralized and DRY
+- [x] Add/expand API docs for all services (Orchestrator, Retrieval, etc.)
+- [x] Lint, DRY, and ESM compliance; docs review
+
+**Estimated Effort:** 2–3 days
+
+**Note:** All foundational scaffolding (prompts, schemas, tests, helpers) is now in place. The project is ready for implementation and refinement.
 
 ---
 
-## Rocketship Project Roadmap
+## Phase 2: Test & Schema Integration
 
-(See full roadmap for detailed milestones and timelines.)
+**Tasks:**
+- [x] Scaffold minimal unit and contract test files for each agent/service
+- [x] Refactor contract tests to use dynamic ports
+- [x] Implement real agent calls in contract tests
+- [x] Ensure integration tests skip gracefully if Docker/Testcontainers is unavailable
+- [x] Scaffold or update JSON schema files for each agent's output
+- [x] Integrate schema validation in each agent's `execute` method (Ajv)
+- [x] Emit telemetry for validation success/failure
+- [x] Expand `docs/testing.md` with test strategies, troubleshooting, and coverage reporting
+- [x] Achieve ≥80% test coverage, schema validation, contract test pass
+
+**Estimated Effort:** 3–4 days
+
+---
+
+## Phase 3: Prompt Governance & RAG Foundation
+
+**Tasks:**
+- [x] Scaffold minimal `.tpl` prompt templates for all agents (with version/timestamp headers and TODOs)
+- [x] Lint prompt templates in CI (`.github/workflows/prompt-lint.yml`)
+- [x] Emit telemetry on prompt load/version
+- [x] Scaffold/implement token-based chunking and real embedding model in RAG pipeline
+- [x] Emit telemetry for RAG ingestion, retrieval, deduplication
+- [x] Expand `docs/prompts.md` and RAG sections in `docs/architecture.md`
+- [x] Ensure prompt lint, RAG telemetry, prompt versioning
+
+**Estimated Effort:** 2–3 days
+
+---
+
+## Phase 4: CI/CD, Observability, Security
+
+**Tasks:**
+- [ ] Ensure all CI workflows (lint, test, prompt-lint, build) are green and block on failure
+- [ ] Integrate code coverage reporting and enforce thresholds
+- [ ] Populate `observability/dashboards/` with per-agent Grafana JSON and alert rules
+- [ ] Expose Prometheus `/metrics` endpoint
+- [ ] Instrument all core services and agents with OpenTelemetry
+- [ ] Build minimal dashboard (VS Code webview or web UI) for real-time monitoring
+- [ ] Add/expand `docs/observability.md` and `docs/ci-cd.md`
+- [ ] Add/expand `docs/security.md` for secret management, input validation, and compliance
+- [ ] CI green, SAST/DAST pass, dashboards live
+
+**Estimated Effort:** 1 week
+
+---
+
+## Phase 5: Advanced Services & Plugin Extensibility
+
+**Tasks:**
+- [ ] Scaffold and implement ModelAdvisor, BanditController, PKGService, LoRAAdapterService
+- [ ] Refactor OrchestratorService to graph/state-machine model; define agent roles (Planner, Critic, Executor, ReflectionAgent)
+- [ ] Implement message-passing and task queueing natively
+- [ ] Integrate lightweight, embeddable knowledge graph (TypeScript-native or adapter)
+- [ ] Refactor ToolRegistry for runtime registration, discovery, and removal; integrate Opossum
+- [ ] Add CriticAgent, ReflectionAgent, and feedback logging
+- [ ] Require agent outputs to include rationale and decision trace
+- [ ] Log all actions, tool invocations, and errors to central audit log
+- [ ] Implement HITL checkpoints as middleware
+- [ ] Document and test plugin lifecycle and extension points
+- [ ] Add advanced agent/service extension points for v2+
+- [ ] Expand `docs/plugins.md` with lifecycle, DI, and security
+- [ ] Plugin tests, doc coverage, extension point validation
+
+**Estimated Effort:** 1 week+
+
+---
+
+## Phase 6: Ongoing Maintenance & Review
+
+**Tasks:**
+- [ ] Regularly review and update all documentation and TODOs
+- [ ] Track all TODOs in a central place (e.g., GitHub Issues or `TODO.md`)
+- [ ] Encourage contributors to update docs as part of every PR
+- [ ] Schedule periodic recursive reviews of all documentation
+- [ ] Onboard new contributors with up-to-date guides and roadmap references
+- [ ] Maintain and update the Integration & Technical Plan as new research emerges
+- [ ] Recurring reviews, docs sync, onboarding feedback
+
+**Estimated Effort:** Ongoing
+
+---
+
+## Rationale
+
+This phased roadmap is designed to:
+- **Stabilize the codebase and enforce best practices** before layering on complexity.
+- **Integrate testing and schema validation early** to catch regressions and enforce contracts.
+- **Establish prompt governance and RAG foundation** for robust, adaptive agent workflows.
+- **Prioritize CI/CD, observability, and security** to ensure reliability and compliance from the start.
+- **Enable extensibility and advanced features** only after the core is stable and observable.
+- **Maintain a living process** of review, documentation, and onboarding to support sustainable growth.
+
+**Sequence reasoning:**
+- Codebase stabilization and documentation are prerequisites for all further work.
+- Testing and schema validation must precede prompt and RAG enhancements to ensure correctness.
+- Prompt governance and RAG are core to agent quality and must be in place before scaling up.
+- CI/CD, observability, and security are critical for production readiness and must be enforced before extensibility.
+- Advanced services and plugin support are last, as they depend on a stable, observable, and secure foundation.
+
+---
 
 ## See also
 - architecture.md
 - configuration.md
 - onboarding.md
+- testing.md
+- prompts.md
+- agents.md
+- plugins.md
+- observability.md
+- ci-cd.md
+- security.md
 
-> **Note:** Static SVG diagrams are available in `docs/assets/` for offline or preview use.
+## Integration & Technical Plan (2024)
+
+This section summarizes the latest integration and technical plan, synthesizing best practices and research for Rocketship. For full details, see the 'Integration & Technical Plan' in [Feature_Enhancements.md](../Feature_Enhancements.md).
+
+**Key Enhancements:**
+- Graph-based, multi-agent orchestration (Plan→Dispatch→Resolve)
+- Unified MemoryService (vector + knowledge graph)
+- Dynamic ToolRegistry with circuit breaking and runtime registration
+- CriticAgent, ReflectionAgent, and feedback loops
+- Explainability, audit logging, and human-in-the-loop (HITL) checkpoints
+- OpenTelemetry-based observability and dashboards
+- Prompt metadata, evaluation, and governance
+- Strict modularity, performance, and extension points
+
+**Implementation Phases:**
+1. Orchestration & Memory Foundation
+2. Agentic Enhancements
+3. Observability, Security, and Governance
+4. UI & Extensibility
+
+Each phase below has been updated to reflect these priorities.

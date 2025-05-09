@@ -2,6 +2,30 @@
 
 > **Note:** The codebase has undergone a mass refactor for DRY, YAGNI, and canonical structure. See [CHANGELOG.md](../CHANGELOG.md) for the canonical structure and refactor principles. All test organization and practices now follow these standards.
 
+---
+
+![Testing Strategy and Feedback Loops](assets/testing-flow.svg)
+*Figure: The Rocketship testing strategy, showing unit, integration, E2E, performance, and security testing, with feedback loops to development and CI/CD. All diagrams are accessible and follow Rocketship's visual standards.*
+
+```mermaid
+flowchart TD
+  A[Unit Tests] --> B[Integration Tests]
+  B --> C[E2E Tests]
+  C --> D[Performance & Security]
+  D --> E[CI/CD & Release]
+  E --> F[Feedback & Issue Tracking]
+  F --> A
+  subgraph Automation
+    B
+    C
+    D
+    E
+  end
+```
+*Figure: Mermaid diagram of the Rocketship test workflow, including automation and feedback loops. Alt: Flow from unit to integration, E2E, performance/security, CI/CD, and feedback.*
+
+---
+
 ## Tech Stack (2024)
 - **Test Framework:** Vitest
 - **Circuit Breaking:** Opossum

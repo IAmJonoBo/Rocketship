@@ -2,6 +2,30 @@
 
 This document consolidates security, compliance, SAST/DAST, and privacy for Rocketship.
 
+---
+
+![Security & Compliance Flows](assets/security-flow.svg)
+*Figure: Rocketship's security and compliance flows, showing SLSA, SBOM generation, CI/CD integration, vulnerability scanning, and release management. All diagrams are accessible and follow Rocketship's visual standards.*
+
+```mermaid
+flowchart TD
+  A[SLSA Provenance] --> B[SBOM Generation]
+  B --> C[CI/CD Pipeline]
+  C --> D[Vulnerability Scanning]
+  D --> E[Release & Audit]
+  E --> F[Compliance Reporting]
+  F --> A
+  subgraph Security Controls
+    B
+    C
+    D
+    E
+  end
+```
+*Figure: Mermaid diagram of Rocketship's security workflow, including security controls and compliance reporting. Alt: Flow from SLSA to SBOM, CI/CD, scanning, release, and compliance.*
+
+---
+
 ## See also
 - architecture.md
 - testing.md

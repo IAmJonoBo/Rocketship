@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="900" height="320" viewBox="0 0 900 320" fill="none" xmlns="http://www.w3.org/2000/svg" aria-labelledby="observability-title observability-desc" role="img">
+  <title id="observability-title">Observability Architecture and Feedback</title>
+  <desc id="observability-desc">A diagram showing Rocketship's observability architecture: metrics instrumentation, telemetry, Prometheus exporter, dashboards, alerting, incident response, and continuous improvement.</desc>
+  <defs>
+    <linearGradient id="cyanMagenta" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00fff7"/>
+      <stop offset="100%" stop-color="#ff00ea"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#00fff7"/>
+    </marker>
+    <marker id="arrowheadMagenta" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#ff00ea"/>
+    </marker>
+  </defs>
+  <rect width="900" height="320" rx="28" fill="#23232b"/>
+  <!-- Stages -->
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="16" font-weight="bold">
+    <rect x="60" y="120" width="120" height="48" rx="14" fill="#18181f" stroke="#00fff7" stroke-width="3" filter="url(#glow)"/>
+    <text x="120" y="150" text-anchor="middle" fill="#00fff7">Metrics</text>
+    <rect x="220" y="60" width="120" height="48" rx="14" fill="#18181f" stroke="#ff00ea" stroke-width="3" filter="url(#glow)"/>
+    <text x="280" y="90" text-anchor="middle" fill="#ff00ea">Telemetry</text>
+    <rect x="380" y="60" width="120" height="48" rx="14" fill="#18181f" stroke="#00fff7" stroke-width="3" filter="url(#glow)"/>
+    <text x="440" y="90" text-anchor="middle" fill="#00fff7">Prometheus</text>
+    <rect x="540" y="120" width="120" height="48" rx="14" fill="#18181f" stroke="#ff00ea" stroke-width="3" filter="url(#glow)"/>
+    <text x="600" y="150" text-anchor="middle" fill="#ff00ea">Dashboards</text>
+    <rect x="700" y="200" width="120" height="48" rx="14" fill="#18181f" stroke="#00fff7" stroke-width="3" filter="url(#glow)"/>
+    <text x="760" y="230" text-anchor="middle" fill="#00fff7">Alerting</text>
+    <rect x="540" y="220" width="120" height="48" rx="14" fill="#18181f" stroke="#ff00ea" stroke-width="3" filter="url(#glow)"/>
+    <text x="600" y="250" text-anchor="middle" fill="#ff00ea">Incident</text>
+    <rect x="380" y="220" width="120" height="48" rx="14" fill="#18181f" stroke="#00fff7" stroke-width="3" filter="url(#glow)"/>
+    <text x="440" y="250" text-anchor="middle" fill="#00fff7">Improve</text>
+  </g>
+  <!-- Arrows -->
+  <g>
+    <line x1="180" y1="144" x2="220" y2="84" stroke="url(#cyanMagenta)" stroke-width="3" marker-end="url(#arrowhead)"/>
+    <line x1="340" y1="84" x2="380" y2="84" stroke="url(#cyanMagenta)" stroke-width="3" marker-end="url(#arrowhead)"/>
+    <line x1="500" y1="84" x2="540" y2="144" stroke="url(#cyanMagenta)" stroke-width="3" marker-end="url(#arrowhead)"/>
+    <line x1="660" y1="144" x2="700" y2="224" stroke="url(#cyanMagenta)" stroke-width="3" marker-end="url(#arrowhead)"/>
+    <line x1="820" y1="224" x2="660" y2="244" stroke="#ff00ea" stroke-width="3" marker-end="url(#arrowheadMagenta)"/>
+    <line x1="660" y1="244" x2="500" y2="244" stroke="#ff00ea" stroke-width="3" marker-end="url(#arrowheadMagenta)"/>
+    <line x1="500" y1="244" x2="180" y2="144" stroke="#ff00ea" stroke-width="3" marker-end="url(#arrowheadMagenta)"/>
+  </g>
+  <!-- Legend -->
+  <rect x="60" y="280" width="780" height="24" rx="8" fill="#23232b" stroke="url(#cyanMagenta)" stroke-width="2"/>
+  <text x="450" y="297" text-anchor="middle" font-size="13" fill="#fff">Cyan = Core Flow, Magenta = Feedback/Incident/Improvement</text>
+</svg>

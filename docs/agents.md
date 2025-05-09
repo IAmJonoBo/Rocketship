@@ -4,6 +4,59 @@
 
 > **Note:** This file is the canonical, comprehensive reference for all Rocketship agent types. Every agent is fully specified here and must never be omitted or removed.
 
+---
+
+![Rocketship Agent Ecosystem and Orchestration](assets/agents-ecosystem.svg)
+*Figure: The Rocketship agent ecosystem and orchestration, showing the relationships and flows between Orchestrator, PlannerAgent, CoderAgent, CriticAgent, TesterAgent, ScaffolderAgent, DeployerAgent, DebuggerAgent, MonitorAgent, DocsAgent, ReflexionAgent, and Plugin/Extension points. All diagrams are accessible and follow Rocketship's visual standards.*
+
+```mermaid
+flowchart TD
+  Orchestrator((Orchestrator))
+  Planner[PlannerAgent]
+  Coder[CoderAgent]
+  Critic[CriticAgent]
+  Tester[TesterAgent]
+  Scaffolder[ScaffolderAgent]
+  Deployer[DeployerAgent]
+  Debugger[DebuggerAgent]
+  Monitor[MonitorAgent]
+  Docs[DocsAgent]
+  Reflexion[ReflexionAgent]
+  PluginExt[Plugin/Extension]
+
+  Orchestrator --> Planner
+  Orchestrator --> Coder
+  Orchestrator --> Critic
+  Orchestrator --> Tester
+  Planner --> Coder
+  Planner --> Scaffolder
+  Coder --> Critic
+  Coder --> Tester
+  Coder --> Deployer
+  Coder --> Debugger
+  Coder --> Docs
+  Critic --> Coder
+  Critic --> Reflexion
+  Critic --> Tester
+  Tester --> Orchestrator
+  Scaffolder --> Coder
+  Deployer --> Monitor
+  Debugger --> Coder
+  Monitor --> Orchestrator
+  Docs --> Coder
+  Reflexion -.-> Orchestrator
+  PluginExt -.-> Orchestrator
+  PluginExt -.-> Coder
+
+  classDef core fill:#18181f,stroke:#00fff7,stroke-width:2;
+  classDef review fill:#18181f,stroke:#ff00ea,stroke-width:2;
+  class Orchestrator,Planner,Coder,Tester,Deployer,Monitor,Docs,Reflexion core;
+  class Critic,Scaffolder,Debugger,PluginExt review;
+```
+*Figure: Mermaid diagram of the Rocketship agent ecosystem and orchestration. Alt: Orchestrator at the center, with flows to all agents and extension points, matching the SVG structure.*
+
+---
+
 ## Agent Summary Table
 
 | Agent Name        | Purpose/Role                                              | Key Interactions                |
@@ -279,6 +332,8 @@ interface DeployerAgent {
 
 **Extensibility:** Support for new environments, plugin hooks
 
+<!-- TODO: Implementation stub exists in code. Complete logic, add schema validation, prompt template, and tests. -->
+
 ---
 
 ## 7. DebuggerAgent
@@ -320,6 +375,8 @@ interface DebuggerAgent {
 
 **Extensibility:** Custom diagnosis plugins
 
+<!-- TODO: Implementation stub exists in code. Complete logic, add schema validation, prompt template, and tests. -->
+
 ---
 
 ## 8. MonitorAgent
@@ -358,6 +415,8 @@ interface MonitorAgent {
 **Security:** Alert throttling, privacy controls
 
 **Extensibility:** Custom alert rules, plugin support
+
+<!-- TODO: Implementation stub exists in code. Complete logic, add schema validation, prompt template, and tests. -->
 
 ---
 
@@ -400,6 +459,8 @@ interface DocsAgent {
 
 **Extensibility:** Support for new doc sources, plugin hooks
 
+<!-- TODO: Implementation stub exists in code. Complete logic, add schema validation, prompt template, and tests. -->
+
 ---
 
 ## 10. ReflexionAgent
@@ -423,45 +484,4 @@ interface ReflexionAgent {
 ```
 **Inputs:** `workflowResult`, `sessionId`
 
-**Outputs:** `lessonsLearned`, optional `recommendations`, metadata
-
-**Interactions:**
-- Receives workflow results from Orchestrator or CriticAgent
-- Updates BanditController or prompt templates
-
-**Example Workflow:**
-1. Receives workflow result
-2. Analyzes for improvement
-3. Updates system policies or prompts
-
-**Config:** `agents.reflexion`
-
----
-
-## PluginManager (API & Lifecycle)
-
-**Purpose:** Handles plugin discovery, loading/unloading, and lifecycle management. Injects plugin-provided capabilities into OrchestratorService and HybridRetrievalService as needed.
-
-**API/Interface:**
-```ts
-export class PluginManager {
-  constructor();
-  loadPlugins(): void; // Discover and load plugins
-  // (Extend with registerPlugin, unloadPlugin, getPlugin, etc. as needed)
-}
-```
-
-**Lifecycle Hooks:**
-- `constructor()`: Initializes the plugin system.
-- `loadPlugins()`: Discovers and loads plugins at startup or on demand.
-- *(Planned)*: `registerPlugin(plugin)`, `unloadPlugin(name)`, `getPlugin(name)` for dynamic management.
-
-**Usage Example:**
-```ts
-const pluginManager = new PluginManager();
-pluginManager.loadPlugins();
-```
-
-**Extensibility:** Plugins can declare dependencies, capabilities, and permissions. All plugins are validated and registered at startup. See [extension/src/services/PluginManager.ts](../extension/src/services/PluginManager.ts).
-
-**Testing:** DI registration and plugin lifecycle are covered by unit tests. See [core/__tests__/di-registration.test.ts](../packages/core/__tests__/di-registration.test.ts).
+**Outputs:** `

@@ -4,6 +4,11 @@
 
 This guide ensures new users and teams can quickly adopt Rocketship and seamlessly transition project ownership, covering a Quickstart tutorial, ADR maintenance process, and a comprehensive handover checklist.
 
+> **For the canonical implementation plan and actionable details, see:**
+> - [Feature_Enhancements.md](../Feature_Enhancements.md)
+> - [docs/roadmap.md](roadmap.md)
+> - [TODO.md](../TODO.md)
+
 ---
 
 ## 1. Quickstart Guide
@@ -116,3 +121,33 @@ A template to ensure seamless project transition to a new team.
 - **File Watching:** chokidar
 - **Prompt Governance:** handlebars-lint (CI)
 - **Accessibility:** axe-core, Pa11y, Lighthouse
+
+---
+
+## Contributor Journey Overview
+
+![Rocketship Contributor Journey](assets/onboarding-journey.svg)
+*Figure: Typical contributor onboarding and handover journey. See below for Mermaid source and details.*
+
+<details>
+<summary>Mermaid Diagram (for quick edits)</summary>
+
+```mermaid
+flowchart LR
+  A[Clone & Setup] --> B[Read Docs]
+  B --> C[Run Tests]
+  C --> D[Make Changes]
+  D --> E[Open PR]
+  E --> F[Review]
+  F --> G[Merge]
+  G --> H[Handover]
+  style A fill:#23232b,stroke:#00fff7,stroke-width:3
+  style B fill:#23232b,stroke:#ff00ea,stroke-width:3
+  style C fill:#23232b,stroke:#00fff7,stroke-width:3
+  style D fill:#23232b,stroke:#ff00ea,stroke-width:3
+  style E fill:#23232b,stroke:#00fff7,stroke-width:3
+  style F fill:#23232b,stroke:#ff00ea,stroke-width:3
+  style G fill:#23232b,stroke:#00fff7,stroke-width:3
+  style H fill:#23232b,stroke:#ff00ea,stroke-width:3
+```
+</details>

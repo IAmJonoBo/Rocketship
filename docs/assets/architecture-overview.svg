@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="900" height="540" viewBox="0 0 900 540" fill="none" xmlns="http://www.w3.org/2000/svg" aria-labelledby="rocketship-architecture-title rocketship-architecture-desc" role="img">
+  <title id="rocketship-architecture-title">Rocketship System Architecture</title>
+  <desc id="rocketship-architecture-desc">A high-level diagram showing the relationships between the VS Code extension, CLI, core services, vector store, knowledge graph, observability, and external APIs in Rocketship.</desc>
+  <defs>
+    <linearGradient id="cyanMagenta" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00fff7"/>
+      <stop offset="100%" stop-color="#ff00ea"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="900" height="540" rx="32" fill="#23232b"/>
+  <!-- VS Code Extension -->
+  <rect x="60" y="60" width="180" height="80" rx="16" fill="#18181f" stroke="url(#cyanMagenta)" stroke-width="3" filter="url(#glow)"/>
+  <text x="150" y="90" text-anchor="middle" font-size="20" fill="#00fff7" font-family="Segoe UI, Arial, sans-serif" font-weight="bold">VS Code Extension</text>
+  <text x="150" y="115" text-anchor="middle" font-size="14" fill="#fff">UI & Commands</text>
+  <text x="150" y="135" text-anchor="middle" font-size="14" fill="#fff">Extension Host</text>
+  <!-- CLI -->
+  <rect x="60" y="180" width="180" height="60" rx="16" fill="#18181f" stroke="url(#cyanMagenta)" stroke-width="3" filter="url(#glow)"/>
+  <text x="150" y="210" text-anchor="middle" font-size="20" fill="#ff00ea" font-family="Segoe UI, Arial, sans-serif" font-weight="bold">CLI Companion</text>
+  <text x="150" y="230" text-anchor="middle" font-size="14" fill="#fff">CLI Entrypoint</text>
+  <!-- Core Services -->
+  <rect x="300" y="60" width="340" height="260" rx="24" fill="#18181f" stroke="url(#cyanMagenta)" stroke-width="4" filter="url(#glow)"/>
+  <text x="470" y="90" text-anchor="middle" font-size="22" fill="#fff" font-family="Segoe UI, Arial, sans-serif" font-weight="bold">Core Services</text>
+  <rect x="340" y="120" width="120" height="40" rx="10" fill="#23232b" stroke="#00fff7" stroke-width="2"/>
+  <text x="400" y="145" text-anchor="middle" font-size="15" fill="#00fff7">Orchestrator</text>
+  <rect x="480" y="120" width="120" height="40" rx="10" fill="#23232b" stroke="#ff00ea" stroke-width="2"/>
+  <text x="540" y="145" text-anchor="middle" font-size="15" fill="#ff00ea">Agents</text>
+  <rect x="340" y="180" width="120" height="36" rx="10" fill="#23232b" stroke="#00fff7" stroke-width="2"/>
+  <text x="400" y="203" text-anchor="middle" font-size="14" fill="#00fff7">MemoryService</text>
+  <rect x="480" y="180" width="120" height="36" rx="10" fill="#23232b" stroke="#ff00ea" stroke-width="2"/>
+  <text x="540" y="203" text-anchor="middle" font-size="14" fill="#ff00ea">PKGService</text>
+  <rect x="340" y="230" width="120" height="36" rx="10" fill="#23232b" stroke="#00fff7" stroke-width="2"/>
+  <text x="400" y="253" text-anchor="middle" font-size="14" fill="#00fff7">RetrievalService</text>
+  <rect x="480" y="230" width="120" height="36" rx="10" fill="#23232b" stroke="#ff00ea" stroke-width="2"/>
+  <text x="540" y="253" text-anchor="middle" font-size="14" fill="#ff00ea">PluginManager</text>
+  <!-- Vector Store -->
+  <rect x="700" y="120" width="140" height="48" rx="14" fill="#18181f" stroke="url(#cyanMagenta)" stroke-width="3" filter="url(#glow)"/>
+  <text x="770" y="150" text-anchor="middle" font-size="16" fill="#00fff7">Vector Store</text>
+  <text x="770" y="168" text-anchor="middle" font-size="13" fill="#fff">(LanceDB)</text>
+  <!-- Knowledge Graph -->
+  <rect x="700" y="190" width="140" height="48" rx="14" fill="#18181f" stroke="url(#cyanMagenta)" stroke-width="3" filter="url(#glow)"/>
+  <text x="770" y="220" text-anchor="middle" font-size="16" fill="#ff00ea">Knowledge Graph</text>
+  <text x="770" y="238" text-anchor="middle" font-size="13" fill="#fff">(PKG)</text>
+  <!-- Observability -->
+  <rect x="700" y="270" width="140" height="48" rx="14" fill="#18181f" stroke="url(#cyanMagenta)" stroke-width="3" filter="url(#glow)"/>
+  <text x="770" y="295" text-anchor="middle" font-size="16" fill="#fff">Observability</text>
+  <text x="770" y="313" text-anchor="middle" font-size="13" fill="#00fff7">Telemetry</text>
+  <!-- External APIs -->
+  <rect x="700" y="350" width="140" height="48" rx="14" fill="#18181f" stroke="url(#cyanMagenta)" stroke-width="3" filter="url(#glow)"/>
+  <text x="770" y="375" text-anchor="middle" font-size="16" fill="#fff">External APIs</text>
+  <text x="770" y="393" text-anchor="middle" font-size="13" fill="#ff00ea">LLMs, Tools</text>
+  <!-- Arrows -->
+  <g stroke="url(#cyanMagenta)" stroke-width="3" marker-end="url(#arrowhead)">
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#00fff7"/>
+      </marker>
+    </defs>
+    <!-- VS Code/CLI to Core -->
+    <line x1="240" y1="100" x2="300" y2="140"/>
+    <line x1="240" y1="210" x2="300" y2="200"/>
+    <!-- Core to Vector Store/Knowledge Graph/Observability/APIs -->
+    <line x1="640" y1="140" x2="700" y2="144"/>
+    <line x1="640" y1="200" x2="700" y2="214"/>
+    <line x1="640" y1="260" x2="700" y2="294"/>
+    <line x1="640" y1="280" x2="700" y2="374"/>
+  </g>
+  <!-- Legend -->
+  <rect x="60" y="400" width="780" height="60" rx="16" fill="#23232b" stroke="url(#cyanMagenta)" stroke-width="2"/>
+  <text x="450" y="430" text-anchor="middle" font-size="15" fill="#fff">Legend: Cyan = Data/Context, Magenta = Agents/Plugins, White = Infra/Observability, Charcoal = System Boundary</text>
+  <text x="450" y="450" text-anchor="middle" font-size="13" fill="#aaa">All elements and flows are simplified for clarity. See docs for details.</text>
+</svg>

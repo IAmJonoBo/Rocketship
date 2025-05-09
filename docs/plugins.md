@@ -2,7 +2,24 @@
 
 > **Terminology Note:** For definitions of agents, services, and plugins, see the [Rocketship Glossary](glossary.md).
 
-This guide explains how to develop, register, and maintain plugins and extensions for Rocketship. It covers plugin types, lifecycle, security, best practices, and testing requirements.
+---
+
+![Plugin Lifecycle and Extension Points](assets/plugins-flow.svg)
+*Figure: The Rocketship plugin lifecycle, showing discovery, validation, activation, hot-reload, and extension points. Security and governance boundaries are highlighted. All diagrams are accessible and follow Rocketship's visual standards.*
+
+```mermaid
+flowchart TD
+  A[Discovery (rocketship.yaml)] --> B[Validation]
+  B --> C[Activation (PluginManager)]
+  C --> D[Hot-Reload]
+  D --> C
+  C --> E[Extension Points]
+  subgraph Security & Governance
+    B
+    C
+  end
+```
+*Figure: Mermaid diagram of the plugin workflow, including security/governance boundaries and extension points. Alt: Flow from discovery to validation, activation, hot-reload, and extension.*
 
 ---
 

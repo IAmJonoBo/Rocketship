@@ -1,8 +1,13 @@
 # Troubleshooting & FAQ
 
+> **For the canonical implementation plan and actionable details, see:**
+> - [Feature_Enhancements.md](../Feature_Enhancements.md)
+> - [roadmap.md](roadmap.md)
+> - [TODO.md](../TODO.md)
+
 > **Terminology Note:** For definitions of agents, services, and plugins, see the [Rocketship Glossary](glossary.md).
 
-This guide helps you diagnose and resolve common issues with Rocketship. For additional help, see the documentation links or report a new issue.
+This guide helps you diagnose and resolve common issues with Rocketship. For additional help, see the documentation links or report a new issue. All troubleshooting and FAQ content is now aligned with the Integration & Technical Plan and project priorities.
 
 ---
 

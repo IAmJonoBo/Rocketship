@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="900" height="180" viewBox="0 0 900 180" fill="none" xmlns="http://www.w3.org/2000/svg" aria-labelledby="rocketship-onboarding-title rocketship-onboarding-desc" role="img">
+  <title id="rocketship-onboarding-title">Rocketship Contributor Journey</title>
+  <desc id="rocketship-onboarding-desc">A diagram showing the typical journey for a Rocketship contributor: Clone & Setup, Read Docs, Run Tests, Make Changes, Open PR, Review, Merge, Handover.</desc>
+  <defs>
+    <linearGradient id="cyanMagenta" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00fff7"/>
+      <stop offset="100%" stop-color="#ff00ea"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="900" height="180" rx="24" fill="#23232b"/>
+  <!-- Steps -->
+  <g font-family="Segoe UI, Arial, sans-serif" font-weight="bold">
+    <rect x="30" y="50" width="100" height="50" rx="14" fill="#18181f" stroke="#00fff7" stroke-width="3" filter="url(#glow)"/>
+    <text x="80" y="80" text-anchor="middle" font-size="15" fill="#00fff7">Clone &amp; Setup</text>
+
+    <rect x="150" y="50" width="100" height="50" rx="14" fill="#18181f" stroke="#ff00ea" stroke-width="3" filter="url(#glow)"/>
+    <text x="200" y="80" text-anchor="middle" font-size="15" fill="#ff00ea">Read Docs</text>
+
+    <rect x="270" y="50" width="100" height="50" rx="14" fill="#18181f" stroke="#00fff7" stroke-width="3" filter="url(#glow)"/>
+    <text x="320" y="80" text-anchor="middle" font-size="15" fill="#00fff7">Run Tests</text>
+
+    <rect x="390" y="50" width="100" height="50" rx="14" fill="#18181f" stroke="#ff00ea" stroke-width="3" filter="url(#glow)"/>
+    <text x="440" y="80" text-anchor="middle" font-size="15" fill="#ff00ea">Make Changes</text>
+
+    <rect x="510" y="50" width="100" height="50" rx="14" fill="#18181f" stroke="#00fff7" stroke-width="3" filter="url(#glow)"/>
+    <text x="560" y="80" text-anchor="middle" font-size="15" fill="#00fff7">Open PR</text>
+
+    <rect x="630" y="50" width="100" height="50" rx="14" fill="#18181f" stroke="#ff00ea" stroke-width="3" filter="url(#glow)"/>
+    <text x="680" y="80" text-anchor="middle" font-size="15" fill="#ff00ea">Review</text>
+
+    <rect x="750" y="50" width="70" height="50" rx="14" fill="#18181f" stroke="#00fff7" stroke-width="3" filter="url(#glow)"/>
+    <text x="785" y="80" text-anchor="middle" font-size="15" fill="#00fff7">Merge</text>
+
+    <rect x="840" y="50" width="50" height="50" rx="14" fill="#18181f" stroke="#ff00ea" stroke-width="3" filter="url(#glow)"/>
+    <text x="865" y="80" text-anchor="middle" font-size="15" fill="#ff00ea">Handover</text>
+  </g>
+  <!-- Arrows -->
+  <g stroke="url(#cyanMagenta)" stroke-width="4" marker-end="url(#arrowhead)">
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+        <polygon points="0 0, 10 3.5, 0 7" fill="#00fff7"/>
+      </marker>
+    </defs>
+    <line x1="130" y1="75" x2="150" y2="75"/>
+    <line x1="250" y1="75" x2="270" y2="75"/>
+    <line x1="370" y1="75" x2="390" y2="75"/>
+    <line x1="490" y1="75" x2="510" y2="75"/>
+    <line x1="610" y1="75" x2="630" y2="75"/>
+    <line x1="730" y1="75" x2="750" y2="75"/>
+    <line x1="820" y1="75" x2="840" y2="75"/>
+  </g>
+  <!-- Legend -->
+  <rect x="30" y="120" width="860" height="36" rx="10" fill="#23232b" stroke="url(#cyanMagenta)" stroke-width="2"/>
+  <text x="460" y="142" text-anchor="middle" font-size="13" fill="#fff">Cyan = Setup/Tests/PR/Merge, Magenta = Docs/Changes/Review/Handover, Charcoal = System Boundary</text>
+</svg>
