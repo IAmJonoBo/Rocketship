@@ -49,3 +49,31 @@ The final mass refactor will ensure Rocketship is fully coherent, streamlined, a
 - **Goal:**
   - Deliver a maintainable, extensible, and production-ready monorepo, with clear documentation and robust, modern developer experience.
   - All TODOs marked for the final mass refactor should reference this section.
+
+## [Canonical Directory Structure & Refactor Principles]
+
+This section documents the canonical directory structure and guiding principles for the Rocketship monorepo. All current and future refactors should adhere to this structure and these best practices:
+
+### Directory Structure (2024+)
+- `extension/` — VS Code extension (agents, services, plugins, prompts, helpers, etc.)
+- `cli/` — CLI companion
+- `packages/core/` — Core logic, helpers, schemas, tests
+- `shared/` — Shared types, schemas, utilities
+- `docs/` — Documentation (modular, up-to-date)
+- `tests/` — (Legacy, to be removed if not needed)
+- `ai-ml/`, `backend/`, `frontend/` — Stubs or future expansion
+- `infrastructure/` — Docker, Helm, K8s (for IaC and deployment)
+- `observability/` — Dashboards and monitoring assets
+- `scripts/` — Automation scripts (remove if empty)
+- Configs: `nx.json`, `pnpm-workspace.yaml`, `tsconfig.*`, etc.
+
+### Principles
+- **DRY (Don't Repeat Yourself):** No duplicate code, config, or docs.
+- **YAGNI (You Aren't Gonna Need It):** Remove unused abstractions, dead code, and speculative features.
+- **Single Responsibility:** Each file/module has a clear, focused purpose.
+- **Explicit Imports/Exports:** No ambiguous or circular dependencies.
+- **Consistent Naming/Structure:** Follow conventions for file, directory, and symbol names.
+- **Modern Monorepo Practices:** Nx, pnpm, Vitest, modular shared code, and clear domain boundaries.
+- **Documentation:** All changes and structure decisions are documented here and in relevant docs.
+
+> Reference this section in all major TODOs and documentation for future refactors.
