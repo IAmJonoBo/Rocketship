@@ -23,3 +23,26 @@ export interface ReflectionReport {
   insights?: string[];
   actions?: string[];
 }
+
+/** Defines an issue reported by CriticAgent */
+export interface Issue {
+  line: number;
+  message: string;
+  severity: 'info' | 'warning' | 'error';
+}
+
+export interface DebugReport {
+  originalErrors: Issue[];
+  testResults: Array<{ testName: string; passed: boolean; error?: string }>;
+}
+
+export interface Suggestion {
+  description: string;
+  severity: 'info' | 'warning' | 'critical';
+  actionable: boolean;
+}
+
+export interface MonitorReport {
+  insights: string;
+  suggestions: Suggestion[];
+}

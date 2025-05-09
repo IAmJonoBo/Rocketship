@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "title": "PlannerAgentResponse",
+  "type": "object",
+  "properties": {
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "description": { "type": "string" },
+          "priority": { "type": "integer" }
+        },
+        "required": ["id", "description", "priority"]
+      }
+    }
+  },
+  "required": ["tasks"],
+  "additionalProperties": false
+}

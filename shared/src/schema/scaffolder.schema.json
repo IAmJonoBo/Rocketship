@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft/2020-12/schema",
+  "title": "ScaffolderAgentResponse",
+  "type": "object",
+  "properties": {
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string" },
+          "contents": { "type": "string" }
+        },
+        "required": ["path", "contents"]
+      }
+    }
+  },
+  "required": ["files"],
+  "additionalProperties": false
+}

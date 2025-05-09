@@ -11,7 +11,9 @@ import {
   PlannerAgent,
   CoderAgent,
   CriticAgent,
-  TesterAgent
+  TesterAgent,
+  ScaffolderAgent,
+  DeployerAgent
 } from 'rocketship-extension';
 
 const inference = new InferenceService();
@@ -23,7 +25,9 @@ const orchestrator = new OrchestratorService(
   new TesterAgent(),
   new MemoryService(),
   new TelemetryService(),
-  new MetaLearningController()
+  new MetaLearningController(),
+  new ScaffolderAgent(),
+  new DeployerAgent()
 );
 
 const program = new Command();

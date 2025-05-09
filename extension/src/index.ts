@@ -10,3 +10,5 @@ export * from './agents/PlannerAgent.js';
 export * from './agents/CoderAgent.js';
 export * from './agents/CriticAgent.js';
 export * from './agents/TesterAgent.js';
+export * from './agents/ScaffolderAgent.js';
+export * from './agents/DeployerAgent.js';
