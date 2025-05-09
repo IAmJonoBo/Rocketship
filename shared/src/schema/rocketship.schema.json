@@ -1,14 +1,108 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "Rocketship Configuration Schema",
-  "description": "Schema for validating rocketship.yaml configuration files.",
+  "description": "Schema for rocketship.yaml configuration",
   "type": "object",
   "properties": {
+    "global": {
+      "type": "object",
+      "description": "Global settings applied to all agents and services",
+      "properties": {
+        "modelProvider": {
+          "type": "string",
+          "enum": ["local", "ollama", "hf", "custom"],
+          "default": "local",
+          "description": "Default model provider: 'local', 'ollama', 'hf' (Hugging Face), or 'custom'."
+        },
+        "maxConcurrentAgents": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 2,
+          "description": "Max number of simultaneous agent invocations."
+        },
+        "requestTimeoutMs": {
+          "type": "integer",
+          "minimum": 1000,
+          "default": 120000,
+          "description": "Request timeout in milliseconds for LLM calls."
+        },
+        "enableTelemetry": {
+          "type": "boolean",
+          "default": true,
+          "description": "Globally enable or disable telemetry events."
+        }
+      },
+      "additionalProperties": false
+    },
     "agents": {
-      "type": "array",
-      "description": "List of agent configurations.",
-      "items": { "type": "object" }
+      "type": "object",
+      "description": "Per-agent configuration overrides",
+      "patternProperties": {
+        "^[A-Za-z0-9]+Agent$": {
+          "type": "object",
+          "properties": {
+            "modelProvider": {
+              "type": "string",
+              "enum": ["local", "ollama", "hf", "custom"],
+              "description": "Override model provider for this agent."
+            },
+            "maxConcurrent": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Override max concurrent calls for this agent."
+            },
+            "requestTimeoutMs": {
+              "type": "integer",
+              "minimum": 1000,
+              "description": "Override request timeout for this agent."
+            },
+            "enabled": {
+              "type": "boolean",
+              "default": true,
+              "description": "Enable or disable this agent."
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
+    "retrieval": {
+      "type": "object",
+      "description": "Settings for hybrid retrieval pipeline",
+      "properties": {
+        "vector": {
+          "type": "object",
+          "description": "Vector embedding index configuration",
+          "properties": {
+            "chunkSize": {
+              "type": "integer",
+              "default": 256,
+              "description": "Number of tokens per embedding chunk."
+            },
+            "overlap": {
+              "type": "integer",
+              "default": 128,
+              "description": "Token overlap between chunks."
+            }
+          },
+          "additionalProperties": false
+        },
+        "graph": {
+          "type": "object",
+          "description": "PKG graph ingestion settings",
+          "properties": {
+            "parser": {
+              "type": "string",
+              "default": "tree-sitter",
+              "description": "AST parser engine for graph extraction."
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
     }
   },
-  "required": ["agents"]
+  "required": ["global", "agents", "retrieval"],
+  "additionalProperties": false
 }

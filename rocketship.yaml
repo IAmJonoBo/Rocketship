@@ -1,16 +1,25 @@
 # Rocketship Configuration Template
 # See docs/Configuration & Schema Documentation.md and shared/src/schema/rocketship.schema.json for details
 
+global:
+  modelProvider: "local"
+  maxConcurrentAgents: 2
+  requestTimeoutMs: 120000
+  enableTelemetry: true
+
 agents:
-  - name: "planner"
-    type: "PlannerAgent"
+  PlannerAgent:
     enabled: true
-  - name: "coder"
-    type: "CoderAgent"
+  CoderAgent:
     enabled: true
-  - name: "critic"
-    type: "CriticAgent"
+  CriticAgent:
     enabled: true
-  - name: "tester"
-    type: "TesterAgent"
+  TesterAgent:
     enabled: true
+
+retrieval:
+  vector:
+    chunkSize: 256
+    overlap: 128
+  graph:
+    parser: "tree-sitter"

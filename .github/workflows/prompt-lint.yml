@@ -1,0 +1,22 @@
+name: Prompt Template Lint
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  handlebars-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install handlebars-lint
+        run: npm install -g handlebars-lint
+      - name: Lint prompt templates
+        run: |
+          handlebars-lint extension/src/prompts/*.tpl

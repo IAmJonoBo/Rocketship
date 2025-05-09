@@ -16,18 +16,21 @@ import {
   DeployerAgent
 } from 'rocketship-extension';
 
+// --- mocks for new HybridRetrievalService signature
+const vectorStore = {};
+const serviceConfig = { latencyTarget: 1000 };
+const workspaceRoot = process.cwd();
+
 const inference = new InferenceService();
+const memoryService = new MemoryService();
+const telemetryService = new TelemetryService();
+const metaLearningController = new MetaLearningController();
+
 const orchestrator = new OrchestratorService(
-  new HybridRetrievalService(),
-  new PlannerAgent(inference),
-  new CoderAgent(inference),
-  new CriticAgent(inference),
-  new TesterAgent(),
-  new MemoryService(),
-  new TelemetryService(),
-  new MetaLearningController(),
-  new ScaffolderAgent(),
-  new DeployerAgent()
+  inference,
+  memoryService,
+  telemetryService,
+  metaLearningController
 );
 
 const program = new Command();

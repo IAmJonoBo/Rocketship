@@ -1,3 +1,4 @@
+// TODO: Implement event dispatch, metrics endpoint (e.g., /metrics), and OpenTelemetry/prom-client integration for advanced telemetry. Mark for final mass refactor.
 // TelemetryService handles logging and metrics
 // See docs/Observability & Telemetry Guides.md
 

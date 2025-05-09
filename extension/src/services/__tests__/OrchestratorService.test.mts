@@ -1,4 +1,4 @@
-import { describe, beforeEach, test, expect, jest } from '@jest/globals';
+import { describe, it, test, expect, beforeEach, vi } from 'vitest';
 import { OrchestratorService } from '../OrchestratorService.js';
 import { ConfigService } from '../ConfigService.js';
 import { HybridRetrievalService } from '../HybridRetrievalService.js';
@@ -29,7 +29,7 @@ describe('OrchestratorService (ESM)', () => {
 
   beforeEach(() => {
     config = new ConfigService();
-    retrieval = new HybridRetrievalService();
+    retrieval = new HybridRetrievalService({}, { latencyTarget: 1000 }, process.cwd());
     inference = new InferenceService();
     memory = new MemoryService();
     telemetry = new TelemetryService();
@@ -50,26 +50,25 @@ describe('OrchestratorService (ESM)', () => {
       critic,
       tester
     );
-    token = { isCancellationRequested: false, onCancellationRequested: jest.fn() };
+    token = { isCancellationRequested: false, onCancellationRequested: vi.fn() };
   });
 
   test('should execute the full workflow and return results on happy path', async () => {
-    // @ts-expect-error: mockResolvedValue type mismatch due to missing return type
-    jest.spyOn(config, 'loadConfig').mockResolvedValue({});
-    jest.spyOn(retrieval, 'retrieve').mockResolvedValue([
+    vi.spyOn(config, 'loadConfig').mockResolvedValue({});
+    vi.spyOn(retrieval, 'retrieve').mockResolvedValue([
       { id: 'ctx1', sourceFile: 'file.ts', lineRange: { start: 1, end: 2 }, snippet: 'ctx' }
     ]);
-    jest.spyOn(planner, 'execute').mockResolvedValue({
+    vi.spyOn(planner, 'execute').mockResolvedValue({
       tasks: [{ id: 't1', description: 'desc', priority: 'high' }],
       metadata: {}
     });
-    jest.spyOn(coder, 'execute').mockResolvedValue({ code: 'code', diff: '', metadata: {} });
-    jest.spyOn(critic, 'execute').mockResolvedValue({ feedback: '', issues: [] });
-    jest.spyOn(tester, 'execute').mockResolvedValue({ testResults: [{ testName: 't', passed: true }], coverage: {} });
-    jest.spyOn(memory, 'appendMemory').mockResolvedValue(undefined);
-    jest.spyOn(telemetry, 'trackEvent').mockImplementation(() => {});
-    jest.spyOn(meta, 'recordFeedback').mockImplementation(() => {});
-    jest.spyOn(meta, 'runReflexion').mockResolvedValue({ summary: '' } as any);
+    vi.spyOn(coder, 'execute').mockResolvedValue({ code: 'code', diff: '', metadata: {} });
+    vi.spyOn(critic, 'execute').mockResolvedValue({ feedback: '', issues: [] });
+    vi.spyOn(tester, 'execute').mockResolvedValue({ testResults: [{ testName: 't', passed: true }], coverage: {} });
+    vi.spyOn(memory, 'appendMemory').mockResolvedValue(undefined);
+    vi.spyOn(telemetry, 'trackEvent').mockImplementation(() => {});
+    vi.spyOn(meta, 'recordFeedback').mockImplementation(() => {});
+    vi.spyOn(meta, 'runReflexion').mockResolvedValue({ summary: '' } as any);
 
     const result = await orchestrator.runWorkflow(
       { requirementText: 'req', language: 'ts', testFramework: 'jest' },

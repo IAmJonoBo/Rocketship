@@ -1,15 +1,15 @@
-import { describe, beforeEach, afterEach, test, expect, jest } from '@jest/globals';
+import { describe, it, test, expect, beforeEach, afterEach, vi } from 'vitest';
 import { CriticAgent } from '../CriticAgent.js';
 import { InferenceService } from '../../services/InferenceService.js';
 
 describe('CriticAgent (ESM)', () => {
   let agent: CriticAgent;
-  let inferSpy: jest.MockedFunction<any>;
+  let inferSpy: any;
 
   beforeEach(() => {
     agent = new CriticAgent(new InferenceService());
     // Spy on the instance method via the prototype
-    inferSpy = jest.spyOn(InferenceService.prototype, 'callModel') as any;
+    inferSpy = vi.spyOn(InferenceService.prototype, 'callModel') as any;
     inferSpy.mockResolvedValue({ text: JSON.stringify({ feedback: 'All checks passed.', issues: [] }) } as any);
   });
 

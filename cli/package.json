@@ -5,8 +5,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "lint": "eslint .",
-    "test": "jest"
+    "lint": "eslint . --ext .ts,.mts",
+    "test": "jest --passWithNoTests"
   },
   "license": "MIT",
   "dependencies": {

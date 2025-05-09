@@ -1,0 +1,193 @@
+# Architecture
+
+## Tech Stack (2024)
+- **Monorepo Orchestration:** Nx
+- **Package Manager:** pnpm
+- **Test Framework:** Vitest
+- **Circuit Breaking:** Opossum
+- **Schema Validation:** Ajv
+- **Vector Store:** LanceDB
+- **File Watching:** chokidar
+- **Prompt Governance:** handlebars-lint (CI)
+- **Accessibility:** axe-core, Pa11y, Lighthouse
+
+> **Accessibility:** All diagrams and images include descriptive alt text. For feedback or accessibility requests, open an issue or email the maintainers. We strive for WCAG 2.1 AA compliance in all docs.
+
+This document consolidates Rocketship's high-level architecture, diagrams, ADRs, service contracts, data flows, and non-functional requirements.
+
+## See also
+- configuration.md
+- agents.md
+- roadmap.md
+- onboarding.md
+
+---
+> **Terminology Note:** For definitions of agents, services, and plugins, see the [Rocketship Glossary](glossary.md).
+> **Advanced Services:** See new sections below for ModelAdvisor, BanditController, ReflexionAgent, and PKGService details.
+---
+
+## Advanced Services
+
+### ModelAdvisor
+
+**Overview:**
+The ModelAdvisor service dynamically selects and recommends optimal LLM models and quantization settings for each agent role, based on system introspection and external model metadata.
+
+**Diagram:**
+```mermaid
+graph TD;
+  SystemProfile --> ModelAdvisor
+  ModelAdvisor --> ModelRegistry
+  ModelAdvisor --> OrchestratorService
+  ModelAdvisor --> Agents
+  ModelRegistry --> HuggingFace
+  ModelRegistry --> Ollama
+  ModelRegistry --> LMStudio
+```
+![ModelAdvisor Diagram](assets/architecture-advanced-services-1.svg)
+
+**Usage Example:**
+- On startup, ModelAdvisor probes system resources and fetches model metadata.
+- Recommends top models for each agent (e.g., CoderAgent: StarCoder, PlannerAgent: GPT-4).
+- User can override or pin models in `rocketship.yaml`.
+
+See also: [agents.md](agents.md), [data-retrieval.md](data-retrieval.md), [glossary.md](glossary.md)
+
+---
+
+### BanditController
+
+**Overview:**
+BanditController implements adaptive model selection using contextual bandits, optimizing model choices based on user feedback and task outcomes.
+
+**Diagram:**
+```mermaid
+graph TD;
+  Agents --> BanditController
+  BanditController --> ModelAdvisor
+  BanditController --> MetricsService
+  BanditController --> OrchestratorService
+```
+
+**Usage Example:**
+- Each model/quantization/agent combination is treated as a "bandit arm".
+- User approvals, overrides, and reverts are used as feedback signals.
+- BanditController updates model selection probabilities over time.
+
+See also: [agents.md](agents.md), [glossary.md](glossary.md)
+
+---
+
+### ReflexionAgent
+
+**Overview:**
+ReflexionAgent performs meta-cognitive self-review after workflows, analyzing what went well, what failed, and how to improve future runs.
+
+**Diagram:**
+```mermaid
+graph TD;
+  OrchestratorService --> ReflexionAgent
+  ReflexionAgent --> BanditController
+  ReflexionAgent --> Agents
+  ReflexionAgent --> PromptTemplates
+```
+
+**Usage Example:**
+- After a workflow, ReflexionAgent reviews results and updates BanditController priors or prompt templates.
+- Lessons learned are logged and can be surfaced to users or used for auto-tuning.
+
+See also: [agents.md](agents.md), [glossary.md](glossary.md)
+
+---
+
+### PKGService (Programming Knowledge Graph)
+
+**Overview:**
+PKGService builds and queries a property graph of the codebase (functions, classes, files, relationships) to enable advanced retrieval and context augmentation.
+
+**Diagram:**
+```mermaid
+graph TD;
+  Codebase --> PKGService
+  PKGService --> HybridRetrievalService
+  PKGService --> Agents
+  PKGService --> VectorStore
+```
+
+**Usage Example:**
+- On workspace load, PKGService parses the codebase and builds a property graph.
+- Agents can query PKGService for "all implementations of X" or "callers of Y".
+- HybridRetrievalService combines PKG and vector search for richer context.
+
+See also: [data-retrieval.md](data-retrieval.md), [agents.md](agents.md), [glossary.md](glossary.md)
+
+---
+
+> **Note:** Static SVG diagrams are available in `docs/assets/` for offline or preview use.
+
+## Quality Gates
+
+Rocketship enforces automated quality gates in CI to ensure maintainability and architectural health:
+
+- **Dead Code Detection:** Uses `ts-prune` to identify unused exports in TypeScript code.
+- **Circular Dependency Detection:** Uses `madge` to detect cycles in module imports.
+- **Continuous Integration:** Both checks run on every push and pull request, blocking merges on failure.
+
+**CI Workflow Diagram:**
+```mermaid
+graph TD;
+  Commit["Commit/PR"] --> DeadCode["Run ts-prune (dead code)"]
+  Commit --> Cycles["Run madge (cycles)"]
+  DeadCode --> Lint["Lint & Test"]
+  Cycles --> Lint
+  Lint --> Build["Build & Coverage"]
+  Build --> Deploy["Deploy/Release"]
+```
+
+> See `.github/workflows/ci.yml` and [ROCKETSHIP_PROJECT_BRIEF.md](../ROCKETSHIP_PROJECT_BRIEF.md) for details.
+
+## Circuit Breaker & Schema Validation Flow (2024)
+
+- **Agent execution** in `OrchestratorService` is wrapped with a circuit breaker using [Opossum](https://nodeshift.dev/opossum/), via `helpers/circuitBreaker.ts`.
+- **Telemetry** is emitted on breaker state changes (`open`, `halfOpen`, `close`, `fallback`) for observability and alerting.
+- **Schema validation** is performed on agent outputs using Ajv, via `Validator.ts` and shared JSON schemas.
+- **Agents covered:**
+  - `PlannerAgent` (`planner.schema.json`)
+  - `ScaffolderAgent` (`scaffolder.schema.json`)
+  - `MonitorAgent` (`monitor.schema.json`)
+  - `DebuggerAgent` (`debug.schema.json`)
+  - `CriticAgent` (`critic.schema.json`)
+- **Telemetry** is emitted for both validation success and failure.
+- **Example:**
+  - `executeAgent` wraps `agent.execute()` in `breaker.fire()`.
+  - On error, emits `breaker.fallback` and returns a stub result.
+  - After execution, validates output against the agent's schema (if available) and throws a `RocketshipError` on failure.
+- **References:**
+  - See `helpers/circuitBreaker.ts` for the canonical circuit breaker implementation.
+  - See `Validator.ts` for schema validation logic.
+
+## Adaptive RAG Pipeline (2024)
+
+- **File Watching:** Uses `chokidar` to watch `.ts` and `.js` files for changes in the workspace.
+- **Chunking:** On file change, files are split into line-based chunks using `chunkFile` (see `extension/src/helpers/chunking.ts`).
+  - *TODO:* Replace with token-based chunking for better embedding alignment.
+- **Embedding:** Each chunk is embedded using `embedFile` (see `extension/src/helpers/embedding.ts`).
+  - *TODO:* Integrate a real embedding model (OpenAI, HuggingFace, or local model).
+- **Vector Store:** Chunks and embeddings are upserted into LanceDB for fast vector retrieval.
+- **Retrieval:**
+  - Adaptive `k` selection based on latency target.
+  - Deduplication of retrieved chunks using `pruneDuplicates`.
+- **Telemetry:**
+  - Emitted for ingestion success/error, retrieval, and deduplication effectiveness.
+
+This pipeline enables fast, adaptive retrieval-augmented generation (RAG) for all agents and workflows.
+
+## Prompt Governance (2024)
+
+- **Prompt Templates:** All agent/system prompts are defined as Handlebars templates in `extension/src/prompts/`.
+- **Versioning:** Each template includes a version and timestamp header for traceability.
+- **Linting:** All `.tpl` templates are linted in CI using `handlebars-lint` (see `.github/workflows/prompt-lint.yml`).
+- **Telemetry:** Telemetry is emitted on prompt load for version tracking and auditability.
+- **Sample Template:** See `sample-agent.tpl` for a reference prompt with version and timestamp.
+
+This process ensures prompt quality, traceability, and safe evolution of agent instructions.

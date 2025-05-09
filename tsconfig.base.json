@@ -9,12 +9,33 @@
     "composite": true,
     "baseUrl": ".",
     "paths": {
-      "@rocketship/shared": ["shared/src/index.ts", "shared/dist/index.js"],
-      "@rocketship/core": ["packages/core/src/index.ts", "packages/core/dist/index.js"],
-      "rocketship-extension": ["extension/src/index.ts", "extension/dist/index.js"],
-      "@rocketship/shared/*": ["shared/src/*", "shared/dist/*"],
-      "@rocketship/core/*": ["packages/core/src/*", "packages/core/dist/*"],
-      "rocketship-extension/*": ["extension/src/*", "extension/dist/*"]
+      "@rocketship/core": [
+        "packages/core/src/index.ts",
+        "packages/core/dist/index.d.ts",
+        "packages/core/dist/index.js"
+      ],
+      "@rocketship/core/*": [
+        "packages/core/src/*",
+        "packages/core/dist/*"
+      ],
+      "@rocketship/shared": [
+        "shared/src/index.ts",
+        "shared/dist/index.d.ts",
+        "shared/dist/index.js"
+      ],
+      "@rocketship/shared/*": [
+        "shared/src/*",
+        "shared/dist/*"
+      ],
+      "rocketship-extension": [
+        "extension/dist/index.d.ts",
+        "extension/dist/index.js",
+        "extension/src/index.ts"
+      ],
+      "rocketship-extension/*": [
+        "extension/src/*",
+        "extension/dist/*"
+      ]
     }
   }
 }

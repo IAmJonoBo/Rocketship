@@ -3,6 +3,9 @@
 
 import { CancellationToken } from 'vscode';
 import { InferenceService } from '../services/InferenceService.js';
+import { Issue } from '../../../shared/src/types/index.js';
+import { Validator } from '../../../packages/core/src/Validator.js';
+import criticSchema from '../../../shared/src/schema/critic.schema.json' with { type: 'json' };
 
 export interface CriticAgentParams {
   code: string;
@@ -11,7 +14,7 @@ export interface CriticAgentParams {
 }
 export interface CriticAgentResponse {
   feedback: string;
-  issues: Array<{ line: number; message: string; severity: 'info' | 'warning' | 'error' }>;
+  issues: Issue[];
 }
 
 export class CriticAgent {
@@ -38,9 +41,15 @@ Output a JSON object with "feedback" and "issues" (each with line, message, seve
 `;
     const result = await this.inference.callModel({ prompt }, token);
     try {
-      const parsed = JSON.parse(result.text);
+      const parsed = JSON.parse(result.text) as CriticAgentResponse;
       if (typeof parsed.feedback !== 'string' || !Array.isArray(parsed.issues)) {
         throw new Error('Invalid CriticAgent schema');
+      }
+      // Ajv validation
+      const validator = new Validator();
+      const validate = validator.compile(criticSchema);
+      if (!validate(parsed)) {
+        throw new Error('CriticAgent output failed schema validation: ' + JSON.stringify(validate.errors));
       }
       return parsed;
     } catch (err: any) {

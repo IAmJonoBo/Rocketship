@@ -5,11 +5,19 @@
     "declaration": true,
     "declarationMap": true,
     "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true
   },
   "references": [
     { "path": "../shared" },
     { "path": "../packages/core" }
   ],
-  "include": ["src/**/*"]
+  "include": ["src/**/*"],
+  "ts-node": {
+    "esm": true
+  }
 }

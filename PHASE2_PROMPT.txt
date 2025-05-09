@@ -1,0 +1,14 @@
+Agent Prompt:
+In extension/src/services/HybridRetrievalService.ts:
+1. import { watch } from 'chokidar';
+2. call watch('**/*.ts', { ignored: 'node_modules/**' })
+     .on('add', path => this.ingestFile(path))
+     .on('change', path => this.ingestFile(path));
+3. Before each retrieve(), compute:
+     const k = this.serviceConfig.latencyTarget < 1000 ? 3 : 5;
+4. After retrieving chunks, prune duplicates:
+     const unique = pruneDuplicates(chunks, 0.9);
+     return unique;
+5. Add a unit test stub at extension/src/services/__tests__/HybridRetrievalService.test.mts
+   to exercise file-watching (mock chokidar) and dynamic-k logic.
+

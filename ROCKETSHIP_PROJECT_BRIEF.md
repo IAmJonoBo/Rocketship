@@ -1,9 +1,28 @@
 # Rocketship: Project & Technical Specification
 
+> **Note:** All technical specifications, architecture, agent APIs, and best practices are now consolidated in the [docs/](docs/) directory. See those files for the latest, canonical guidance on all features, agent types, and workflows.
+
+For:
+- Architecture: [docs/architecture.md](docs/architecture.md)
+- Agents & API: [docs/agents.md](docs/agents.md)
+- Configuration: [docs/configuration.md](docs/configuration.md)
+- Testing & QA: [docs/testing.md](docs/testing.md)
+- Project Roadmap: [docs/roadmap.md](docs/roadmap.md)
+- Onboarding & Handover: [docs/onboarding.md](docs/onboarding.md)
+- Security & Compliance: [docs/security.md](docs/security.md)
+- Observability & Telemetry: [docs/observability.md](docs/observability.md)
+- Prompt Engineering: [docs/prompts.md](docs/prompts.md)
+- Data & Retrieval Pipeline: [docs/data-retrieval.md](docs/data-retrieval.md)
+- Requirements & Scope: [docs/requirements.md](docs/requirements.md)
+- CI/CD & Deployment: [docs/ci-cd.md](docs/ci-cd.md)
+
 ---
+
+# [Legacy content below is superseded by the above docs.]
 
 ## Table of Contents
 - [Rocketship: Project \& Technical Specification](#rocketship-project--technical-specification)
+- [\[Legacy content below is superseded by the above docs.\]](#legacy-content-below-is-superseded-by-the-above-docs)
   - [Table of Contents](#table-of-contents)
   - [Service Boundaries \& Architecture](#service-boundaries--architecture)
     - [High-Level Diagram](#high-level-diagram)
@@ -108,6 +127,15 @@
   - [Code Quality \& Cleanup Automation](#code-quality--cleanup-automation)
   - [Extension Lifecycle Best Practices](#extension-lifecycle-best-practices)
   - [Integration \& Ecosystem Opportunities](#integration--ecosystem-opportunities)
+  - [Test Coverage Reports (Vitest)](#test-coverage-reports-vitest)
+  - [AI TODO List (Refactor, Audit \& Quality Gates)](#ai-todo-list-refactor-audit--quality-gates)
+    - [PHASE 0: Tooling \& Foundation Setup](#phase-0-tooling--foundation-setup)
+    - [PHASE 1: Resilient Orchestrator \& Runtime Validation](#phase-1-resilient-orchestrator--runtime-validation)
+    - [PHASE 2: Adaptive RAG \& Prompt Governance](#phase-2-adaptive-rag--prompt-governance)
+    - [PHASE 3: Sandbox \& Telemetry](#phase-3-sandbox--telemetry)
+    - [PHASE 4: Integration Tests \& Benchmarks](#phase-4-integration-tests--benchmarks)
+    - [PHASE 5: Execution \& Validation](#phase-5-execution--validation)
+    - [PHASE 6: Plugin Infrastructure \& Electron Packaging](#phase-6-plugin-infrastructure--electron-packaging)
 
 ## Service Boundaries & Architecture
 
@@ -688,7 +716,7 @@ export interface Config {
 - Tracks workflow steps, durations, and error patterns
 - Exposes metrics in a Prometheus-compatible format
 
-> **Retention & Alerts**: Configure Prometheus with `--storage.tsdb.retention.time=30d`. Include default Grafana alert rules for 95th‑percentile latency > 2 s or error‑rate > 5 %.
+> **Retention & Alerts**: Configure Prometheus with `--storage.tsdb.retention.time=30d`. Include default Grafana alert rules for 95th‑percentile latency > 2 % or error‑rate > 5 %.
 
 #### Example Metrics API
 ```typescript
@@ -1059,3 +1087,117 @@ if (critique.issues.length > 0) {
 - **Automated Plugin Vetting Pipeline:** In the Rocketship GitHub repo, create a GitHub Actions workflow that triggers on community PRs to `plugins/.../*.js`. The workflow runs CodeQL and Dependabot security checks, then applies a community-triage label for minimal manual review. (Automates security vetting at scale, reducing manual overhead while maintaining a high safety bar for shipped plugins.)
 
 ---
+
+## Test Coverage Reports (Vitest)
+
+To generate and view test coverage reports:
+
+1. Run all tests with coverage:
+
+   ```sh
+   npx vitest run --coverage --reporter=html
+   ```
+
+2. The coverage report will be generated in the `coverage/` directory at the project root.
+
+3. Open `coverage/coverage.html` in your browser to view the interactive coverage report.
+
+> **Note:** If you do not see the `coverage/` directory, ensure all dependencies are installed and tests are passing. For integration tests, a working container runtime is required.
+
+---
+
+## AI TODO List (Refactor, Audit & Quality Gates)
+
+> **Note:** The following TODOs are structured as a phased, canonical implementation and refactor plan for Rocketship. Each phase builds on the previous, and all items are tracked here for transparency and progress. This list is the single source of truth for ongoing and future work. **Progress is ad-hoc and unscheduled. All dependencies and tools must be free/open-source by default, with paid fallbacks only as explicit user opt-in. CI/CD must support self-hosted runners, LM Studio, Ollama, and staged rollout (feature/develop branches first). Model support must include HuggingFace, TogetherAI, Mistral, Le Plateforme, OpenAI, OpenRouter, etc. UX, accessibility, and DX changes can proceed if they pass best-practice checks. Plugin infrastructure and scaffolding should be created early, but plugin implementations can be deferred. Electron packaging is a target; all architecture and dependencies should be compatible with Electron, and Electron-specific packaging and testing should be added.**
+
+### PHASE 0: Tooling & Foundation Setup
+
+- [ ] **Monorepo Orchestrator**
+  - Detect and upgrade/init Turborepo (or migrate from Nx if present); document rationale in README.md.
+- [ ] **Package Manager**
+  - Detect and migrate to pnpm; remove other lockfiles; update scripts and document in README.md.
+- [ ] **Shared Package Bundling**
+  - Detect Rollup/Vite; migrate all shared packages to tsup for ESM/CJS builds; document build instructions.
+- [ ] **Test Framework**
+  - Detect Jest; migrate to Vitest unless hard blockers; document migration and usage.
+- [ ] **CI/CD Platform**
+  - Detect existing CI; adopt GitHub Actions with matrix builds, caching, and SLO checks; document in README.md.
+  - Ensure CI/CD supports self-hosted runners, LM Studio, Ollama, and staged rollout (feature/develop branches first).
+  - Ensure model support for HuggingFace, TogetherAI, Mistral, Le Plateforme, OpenAI, OpenRouter, etc.
+- [ ] **Free/Open-Source Default**
+  - Audit all dependencies and tools to ensure they are free/open-source by default; paid fallbacks only as explicit user opt-in.
+- [ ] **Electron Compatibility**
+  - Ensure all architecture and dependencies are compatible with Electron; add Electron-specific packaging and testing to the plan.
+- [ ] **Mutation Testing**
+  - Add Stryker for mutation testing in core/critical packages; document usage and maintenance.
+- [ ] **Contract Testing**
+  - Add Pact for API contract testing; integrate with OpenAPI specs if present; document usage.
+- [ ] **Accessibility Standards**
+  - Integrate axe-core, Pa11y, and Lighthouse audits in CI; document accessibility policy and tools.
+
+### PHASE 1: Resilient Orchestrator & Runtime Validation
+
+- [ ] **Circuit Breakers & Retries**
+  - In `packages/core/src/helpers/circuitBreaker.ts`, export `createCircuitBreaker(fn)` using Opossum.
+  - In `OrchestratorService.executeAgent`, wrap `agent.execute()` in `breaker.fire()`, emit telemetry, implement fallback and exponential backoff retry.
+- [ ] **Schema-First Validation**
+  - Ensure `shared/src/schemas/*.schema.json` exist for all agent types.
+  - In `OrchestratorService`, validate output with Ajv after each `execute`; emit telemetry and throw `RocketshipError` on failure.
+
+### PHASE 2: Adaptive RAG & Prompt Governance
+
+- [ ] **Adaptive RAG**
+  - In `extension/src/services/HybridRetrievalService.ts`, use chokidar to watch `**/*.ts` and trigger `this.ingestFile(path)`.
+  - Before `retrieve(query)`, compute adaptive k; after retrieval, deduplicate with `pruneDuplicates(chunks, 0.9)`.
+- [ ] **Prompt Governance**
+  - Scaffold `.tpl` prompt templates in `extension/src/prompts/`.
+  - Prepend with prompt version/timestamp; emit telemetry on load; add handlebars-lint to CI.
+
+### PHASE 3: Sandbox & Telemetry
+
+- [ ] **Testcontainers Sandbox**
+  - In `extension/src/services/SandboxService.ts`, implement `runInSandbox(cmd)` using `GenericContainer('node:18-alpine')`.
+  - In `TesterAgent`, replace direct execs with `runInSandbox('npm test')`.
+- [ ] **Low-Cardinality Telemetry & Alerts**
+  - In `packages/core/src/TelemetryService.ts`, use only `agent` and `step` labels, add histogram, implement sampling from `rocketship.yaml`.
+  - Add `observability/dashboards/alerts.json` with p95 > 2s and error_rate > 1% rules.
+
+### PHASE 4: Integration Tests & Benchmarks
+
+- [ ] Add integration and performance tests for all critical flows.
+- [ ] Integrate these into CI pipelines, ensuring SLOs are met.
+
+### PHASE 5: Execution & Validation
+
+- [ ] After each phase, run:
+  ```bash
+  rm -rf **/dist && find . -name '*.tsbuildinfo' -delete
+  pnpm install
+  pnpm -r run tsc --build --verbose
+  pnpm -r run lint
+  pnpm -r run test --detectOpenHandles
+  ```
+- [ ] Review all outputs, mutation/contract/accessibility reports, and CI status.
+- [ ] Update documentation and onboarding as needed.
+
+### PHASE 6: Plugin Infrastructure & Electron Packaging
+
+- [ ] **Plugin Infrastructure & Scaffolding**
+  - Create the infrastructure and scaffolding for plugins (DI, registration, lifecycle, extension points), but defer plugin implementations.
+  - Document plugin API, lifecycle, and extension points in docs/plugins.md.
+- [ ] **Electron Packaging**
+  - Add Electron-specific build scripts, packaging, and testing to CI/CD.
+  - Ensure all features and dependencies are compatible with Electron runtime.
+  - Document Electron packaging and usage in README.md and docs/ci-cd.md.
+
+---
+
+**After each batch of updates:**
+- Update all relevant documentation (README, onboarding, CI/CD, testing, plugins, etc.)
+- Update and summarize changes in CHANGELOG.md
+
+---
+
+**Existing Checklist and Next Steps:**
+
+// ... existing code ...

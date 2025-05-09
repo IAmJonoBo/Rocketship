@@ -1,3 +1,4 @@
+// TODO: Implement sandboxing/isolation for agent execution (e.g., VM, process, or container isolation). Mark for final mass refactor.
 // InferenceService provides LLM inference capabilities
 // See docs/Agent & API Documentation.md
 

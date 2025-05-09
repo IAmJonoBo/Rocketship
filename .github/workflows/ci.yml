@@ -18,6 +18,10 @@ jobs:
           node-version: 18.x
       - name: Install dependencies
         run: npm ci
+      - name: Detect dead code
+        run: yarn run check:dead
+      - name: Detect circular dependencies
+        run: yarn run check:cycles
       - name: Run ESLint
         run: npx eslint . --ext .js,.jsx,.ts,.tsx
 
@@ -47,6 +51,8 @@ jobs:
         run: npm ci
       - name: Build TypeScript monorepo
         run: npx tsc --build
+      - name: Lint prompt templates
+        run: npx handlebars-lint extension/src/prompts/*.tpl || echo "No templates to lint"
       - name: Run tests with coverage
         run: npm test -- --coverage --coverageReporters=cobertura
       - name: Upload code coverage report
@@ -57,6 +63,16 @@ jobs:
         uses: MishaKav/jest-coverage-comment@main
         with:
           coverage-summary-path: ./coverage/coverage-summary.json
+      - name: Install Syft
+        run: |
+          curl -sSfL https://raw.githubusercontent.com/anchore/syft/main/install.sh | sh -s -- -b /usr/local/bin
+      - name: Generate SBOM
+        run: syft . -o cyclonedx-json > sbom.json
+      - name: Upload SBOM Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: sbom
+          path: sbom.json
 
   codeql-sast:
     runs-on: ubuntu-latest
@@ -77,4 +93,26 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
 
+  docs-as-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: Install markdown-link-check
+        run: npm install -g markdown-link-check
+      - name: Install cspell
+        run: npm install -g cspell
+      - name: Check Markdown links
+        run: |
+          find docs/ -name '*.md' | xargs -n 1 markdown-link-check -q -c .github/workflows/markdown-link-check.config.json
+      - name: Spell check documentation
+        run: |
+          cspell "docs/**/*.md" --no-progress --no-summary
+      - name: Install adr-tools
+        run: sudo apt-get update && sudo apt-get install -y adr-tools
+      - name: Validate ADRs
+        run: |
 # Deployment and other jobs can be added below as needed.

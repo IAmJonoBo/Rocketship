@@ -54,7 +54,7 @@ export class OrchestratorService {
     this.telemetry.trackEvent('workflow.start', { workflow: 'Plan→Code→Test' });
 
     // 2. Retrieval: get context snippets
-    const contextChunks = await this.retrieval.retrieve(def.requirementText, { token });
+    const contextChunks = await this.retrieval.retrieve(def.requirementText);
     // 2a. Persist retrieval context for long-term memory
     await this.memory.appendMemory({
       type: 'retrievalContext',
