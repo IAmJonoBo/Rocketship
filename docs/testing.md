@@ -1,5 +1,7 @@
 # Testing & Quality Assurance
 
+> **Note:** The codebase has undergone a mass refactor for DRY, YAGNI, and canonical structure. See [CHANGELOG.md](../CHANGELOG.md) for the canonical structure and refactor principles. All test organization and practices now follow these standards.
+
 ## Tech Stack (2024)
 - **Test Framework:** Vitest
 - **Circuit Breaking:** Opossum
@@ -8,8 +10,6 @@
 - **File Watching:** chokidar
 - **Prompt Governance:** handlebars-lint (CI)
 - **Accessibility:** axe-core, Pa11y, Lighthouse
-
-> **Note:** This file consolidates and supersedes the previous 'Testing & QA Plans.md'.
 
 > **Terminology Note:** For definitions of agents, services, and plugins, see the [Rocketship Glossary](glossary.md).
 

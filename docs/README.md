@@ -1,5 +1,7 @@
 # Rocketship Documentation Index
 
+> **Note:** The codebase has undergone a mass refactor for DRY, YAGNI, and canonical structure. See [CHANGELOG.md](../CHANGELOG.md) for the canonical structure and refactor principles. All documentation and organization now follow these standards.
+
 > **Accessibility & Navigation:**
 > - All diagrams/images include descriptive alt text.
 > - Heading structure and link text are optimized for screen readers.

@@ -1,5 +1,7 @@
 # Architecture
 
+> **Note:** The codebase has undergone a mass refactor for DRY, YAGNI, and canonical structure. See [CHANGELOG.md](../CHANGELOG.md) for the canonical structure and refactor principles. All architecture and organization now follow these standards.
+
 ## Tech Stack (2024)
 - **Monorepo Orchestration:** Nx
 - **Package Manager:** pnpm

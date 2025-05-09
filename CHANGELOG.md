@@ -77,3 +77,5 @@ This section documents the canonical directory structure and guiding principles 
 - **Documentation:** All changes and structure decisions are documented here and in relevant docs.
 
 > Reference this section in all major TODOs and documentation for future refactors.
+
+- Mass refactor: Centralized and standardized shared logic, removed unused/placeholder helpers and services, cleaned up prompt templates, and removed placeholder/non-actionable tests. Codebase now fully adheres to the canonical structure and refactor principles.

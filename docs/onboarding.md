@@ -1,6 +1,6 @@
 # Onboarding & Handover
 
-> **Note:** This file consolidates and supersedes the previous 'Onboarding & Handover Documentation.md'.
+> **Note:** The codebase has undergone a mass refactor for DRY, YAGNI, and canonical structure. See [CHANGELOG.md](../CHANGELOG.md) for the canonical structure and refactor principles. All onboarding, setup, and contribution should follow these standards.
 
 This guide ensures new users and teams can quickly adopt Rocketship and seamlessly transition project ownership, covering a Quickstart tutorial, ADR maintenance process, and a comprehensive handover checklist.
 

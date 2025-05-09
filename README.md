@@ -6,7 +6,7 @@
 
 > **Badges:** See [docs/ci-cd.md](docs/ci-cd.md) for badge and artifact conventions. For definitions, see the [glossary](docs/glossary.md).
 
-> **Note:** This project now uses Nx for monorepo orchestration, pnpm for package management, and Vitest for all testing. All dependencies are open-source by default, with paid fallbacks only as explicit opt-in. Electron compatibility is a core requirement.
+> **Note:** This project now uses Nx for monorepo orchestration, pnpm for package management, and Vitest for all testing. All dependencies are open-source by default, with paid fallbacks only as explicit opt-in. Electron compatibility is a core requirement. The codebase has undergone a mass refactor for DRY, YAGNI, and canonical structure. See the [CHANGELOG.md](CHANGELOG.md) for details on the new structure and refactor principles.
 
 A self-hostable, multi-agent automation platform for VS Code. Rocketship orchestrates specialized AI agents to automate, refactor, and enhance software projects, with a focus on extensibility, robust validation, and modern developer experience.
 
