@@ -113,6 +113,42 @@ flowchart LR
 
 ---
 
+## Phase 4.5: Disaster Recovery Drills & Automated Failover Tests
+
+**Tasks:**
+- [ ] Automate regular backups for LanceDB (vector DB) and audit logs
+- [ ] Scaffold and schedule restore/failover drills for LanceDB and audit logs
+- [ ] Implement health check scripts for vector DB and audit log integrity
+- [ ] Add CI workflow (`.github/workflows/dr-drill.yml`) to run DR drills on schedule
+- [ ] Emit telemetry and alert on drill failures
+- [ ] Document DR procedures and runbooks in `docs/disaster-recovery.md`
+- [ ] Integrate DR status into observability dashboards
+
+**Estimated Effort:** 1–2 days
+
+**See also:** [docs/disaster-recovery.md](disaster-recovery.md), [scripts/drill-lancedb.sh](../scripts/drill-lancedb.sh), [scripts/drill-auditlog.sh](../scripts/drill-auditlog.sh)
+
+---
+
+## Phase 4.6: Resilience, Self-Healing, and Continuous Learning
+
+**Tasks:**
+- [ ] Scaffold and implement SupervisorService (singleton, global fallback, snapshot/rollback, config-driven)
+- [ ] Integrate crash reporting (AIER agent, error_reports table, human-reviewed fix scripts)
+- [ ] Add agent-level defensive middleware/interceptors, with per-agent config in rocketship.yaml
+- [ ] Register DuckDuckGo tool (global, agent-scoped, Redis cache, rate limits, fallback providers)
+- [ ] Scaffold TrainerAgent (nightly/manual, curated sources, vector store namespace)
+- [ ] Implement ReflexionAgent prompt update proposal and lessons storage in LanceDB
+- [ ] Add config stubs for caching, rate-limits, and search providers (global + per-tool)
+- [ ] Instrument all resilience/self-healing events with OpenTelemetry and expose in dashboards
+- [ ] Create and maintain docs/resilience.md for all resilience/self-healing patterns
+
+**Estimated Effort:** 2–3 days
+
+**See also:** [docs/resilience.md](resilience.md), [rocketship.yaml](../rocketship.yaml), [extension/src/services/SupervisorService.ts](../extension/src/services/SupervisorService.ts), [extension/src/agents/TrainerAgent.ts](../extension/src/agents/TrainerAgent.ts), [extension/src/tools/duck-duckgo-tool.ts](../extension/src/tools/duck-duckgo-tool.ts)
+
+---
+
 ## Phase 5: Advanced Services & Plugin Extensibility
 
 **Tasks:**

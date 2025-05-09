@@ -79,3 +79,23 @@ This section documents the canonical directory structure and guiding principles 
 > Reference this section in all major TODOs and documentation for future refactors.
 
 - Mass refactor: Centralized and standardized shared logic, removed unused/placeholder helpers and services, cleaned up prompt templates, and removed placeholder/non-actionable tests. Codebase now fully adheres to the canonical structure and refactor principles.
+
+## [Integration & Technical Plan 2024]
+
+Rocketship has adopted a comprehensive integration and technical plan, synthesizing the latest research and best practices for agentic automation. Major advancements include:
+- Graph-based, multi-agent orchestration (Plan→Dispatch→Resolve)
+- Unified MemoryService (vector + knowledge graph)
+- Dynamic ToolRegistry with circuit breaking and runtime registration
+- CriticAgent, ReflectionAgent, and feedback loops
+- Explainability, audit logging, and human-in-the-loop (HITL) checkpoints
+- OpenTelemetry-based observability and dashboards
+- Prompt metadata, evaluation, and governance
+- Strict modularity, performance, and extension points
+
+All documentation, roadmap, and TODOs have been updated to reflect these priorities. For full details, see:
+- [Feature_Enhancements.md](Feature_Enhancements.md)
+- [docs/roadmap.md](docs/roadmap.md)
+- [TODO.md](TODO.md)
+- [docs/architecture.md](docs/architecture.md)
+
+This plan ensures Rocketship remains the fastest, most extensible, and intelligent agentic automation platform for VS Code and beyond.

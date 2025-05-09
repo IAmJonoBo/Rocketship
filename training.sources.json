@@ -1,0 +1,22 @@
+{
+  "sources": [
+    {
+      "url": "https://owasp.org/www-project-top-ten/",
+      "approved": true,
+      "description": "OWASP Top Ten Security Risks"
+    },
+    {
+      "url": "https://learn.microsoft.com/en-us/semantic-kernel/overview/",
+      "approved": true,
+      "description": "Microsoft Semantic Kernel Documentation"
+    },
+    {
+      "url": "https://python.langchain.com/docs/",
+      "approved": true,
+      "description": "LangChain Official Documentation"
+    }
+  ],
+  "pending": [
+    // New sources proposed by agents, pending human approval
+  ]
+}

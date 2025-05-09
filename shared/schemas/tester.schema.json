@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "TesterAgentResponse",
+  "type": "object",
+  "properties": {
+    "testResults": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "testName": { "type": "string" },
+          "passed": { "type": "boolean" },
+          "error": { "type": "string" }
+        },
+        "required": ["testName", "passed"]
+      }
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "required": ["testResults"],
+  "additionalProperties": false,
+  "description": "TODO: Add validation rules and examples for TesterAgentResponse."
+}

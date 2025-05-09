@@ -10,8 +10,17 @@ global:
 agents:
   PlannerAgent:
     enabled: true
+    defense:
+      retries: 2
+      schemaValidation: true
+    whileLoading:
+      action: fallbackPlan
+      pollEvery: 500 # ms
   CoderAgent:
     enabled: true
+    defense:
+      retries: 1
+      schemaValidation: true
   CriticAgent:
     enabled: true
   TesterAgent:
@@ -23,3 +32,53 @@ retrieval:
     overlap: 128
   graph:
     parser: "tree-sitter"
+
+supervisor:
+  enabled: true
+  snapshot:
+    interval: 5m # or 100 events
+    persistence: sqlite
+  fallback:
+    - FallbackAgent
+    - humanPrompt
+    - externalWebhook
+  autoExecuteFixes: false
+
+tools:
+  duckDuckGo:
+    enabled: true
+    cache: redis
+    ttl: 3600 # seconds
+    rateLimit: 2 # per second
+    allowedAgents:
+      - DocsAgent
+      - ResearchAgent
+  # fallback providers
+  searchProviders:
+    - duckduckgo
+    - bing
+    - google
+
+caching:
+  defaultTTL: 3600
+  providers:
+    duckDuckGo:
+      ttl: 1800
+  evictionPolicy:
+    policy: LRU # or LFU
+    maxEntries: 100
+    ttlSecs: 3600
+  backend: redis # or memory, nvme
+
+rateLimits:
+  default: 5
+  tools:
+    duckDuckGo: 2
+
+devices: auto # or ["cuda:0","cuda:1"]
+
+monitoring:
+  alerts:
+    - expr: model_load_time_seconds{job="rocketship"} > 10
+      for: 1m
+      labels: {severity: "warning"}

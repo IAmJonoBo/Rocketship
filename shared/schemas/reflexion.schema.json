@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ReflexionAgentResponse",
+  "type": "object",
+  "properties": {
+    "lessonsLearned": { "type": "string" },
+    "recommendations": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "metadata": { "type": "object" }
+  },
+  "required": ["lessonsLearned"],
+  "additionalProperties": false,
+  "description": "TODO: Add validation rules and examples for ReflexionAgentResponse."
+}

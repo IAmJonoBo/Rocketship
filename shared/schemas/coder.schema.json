@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CoderAgentResponse",
+  "type": "object",
+  "properties": {
+    "code": { "type": "string" },
+    "diff": { "type": "string" },
+    "metadata": { "type": "object" }
+  },
+  "required": ["code"],
+  "additionalProperties": false,
+  "description": "TODO: Add validation rules and examples for CoderAgentResponse."
+}

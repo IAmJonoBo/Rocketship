@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DebuggerAgentResponse",
+  "type": "object",
+  "properties": {
+    "diagnosis": { "type": "string" },
+    "fix": { "type": "string" },
+    "metadata": { "type": "object" }
+  },
+  "required": ["diagnosis"],
+  "additionalProperties": false,
+  "description": "TODO: Add validation rules and examples for DebuggerAgentResponse."
+}

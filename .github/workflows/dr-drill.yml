@@ -1,0 +1,17 @@
+name: Disaster Recovery Drill
+on:
+  schedule:
+    - cron: '0 3 * * 0' # Weekly at 3am UTC
+jobs:
+  dr-drill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Simulate and Restore LanceDB
+        run: ./scripts/drill-lancedb.sh
+      - name: Simulate and Restore Audit Log
+        run: ./scripts/drill-auditlog.sh
+      - name: Health Check
+        run: |
+          # TODO: Implement a real health check (e.g., npx rocketship --ci check-dr-integrity)
+          echo "[dr-drill] Health check placeholder"

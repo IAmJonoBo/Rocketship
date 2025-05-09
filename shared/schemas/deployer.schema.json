@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DeployerAgentResponse",
+  "type": "object",
+  "properties": {
+    "status": { "type": "string", "enum": ["success", "failure"] },
+    "logs": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "metadata": { "type": "object" }
+  },
+  "required": ["status", "logs"],
+  "additionalProperties": false,
+  "description": "TODO: Add validation rules and examples for DeployerAgentResponse."
+}

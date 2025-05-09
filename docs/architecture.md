@@ -302,4 +302,77 @@ For full details, see [Feature_Enhancements.md](../Feature_Enhancements.md).
 - Prompt evaluation and A/B testing are integrated into CI.
 - Prompt performance and user feedback are logged for continuous improvement.
 
+## Disaster Recovery & Automated Failover
+
+Rocketship incorporates automated disaster recovery (DR) drills and failover tests for critical data stores:
+
+- **Vector DB (LanceDB):** Regular backups, scheduled restore/failover drills, and automated health checks ensure embedding and memory resilience.
+- **Audit Logs:** Automated backup, restore, and integrity verification for all agent actions and decision traces.
+- **CI Integration:** A dedicated workflow (`.github/workflows/dr-drill.yml`) runs DR drills on schedule, emitting telemetry and alerting on failure.
+- **Observability:** DR status and metrics are integrated into dashboards for proactive monitoring.
+- **Documentation:** All procedures and runbooks are detailed in [docs/disaster-recovery.md](disaster-recovery.md).
+
+See also: [scripts/drill-lancedb.sh](../scripts/drill-lancedb.sh), [scripts/drill-auditlog.sh](../scripts/drill-auditlog.sh)
+
 > **For the full, living plan and rationale, see [Feature_Enhancements.md](../Feature_Enhancements.md).**
+
+## Resilience, Self-Healing, and Continuous Learning
+
+Rocketship incorporates advanced resilience and self-healing patterns:
+
+- **SupervisorService:** Singleton service for global orchestration, retries, fallbacks, and snapshot/rollback (configurable in rocketship.yaml).
+- **Crash Reporting:** AIER agent (Raygun or in-house GPT) classifies and suggests fixes for errors, with reports stored in SQLite and audit logs.
+- **Agent Defensive Middleware:** All agents are wrapped with middleware/interceptors for retries, schema validation, and defensive checks, configurable per agent.
+- **DuckDuckGo Tool:** Exposed as a global tool, agent-scoped, with Redis caching, rate limits, and fallback search providers.
+- **TrainerAgent:** Scheduled and manual ingestion of curated best-practice sources, embeddings stored in LanceDB, sources managed in training.sources.json.
+- **ReflexionAgent:** Proposes prompt updates for human review, stores lessons and fine-tuning data in LanceDB.
+- **Performance & Caching:** Heavy tasks offloaded to Electron UtilityProcess, with global and per-tool caching/rate-limits, all metrics exposed via Prometheus.
+- **Observability:** All resilience/self-healing events are instrumented with OpenTelemetry and surfaced in dashboards.
+- **Documentation:** See [docs/resilience.md](resilience.md) for all patterns and configuration options.
+
+Config stubs and extension points are provided in rocketship.yaml and the relevant service/agent/tool files.
+
+## On-Demand Model Loading & Resilience (2024)
+
+Rocketship supports advanced on-demand model loading, caching, and lifecycle management:
+
+- **SupervisorService**: Singleton with sub-managers for models and adapters. Handles TTL eviction, async load/unload, and health checks.
+- **ModelRouter**: Handles cache lookup, async load, warming status, and device placement. Returns structured ModelStatus responses.
+- **CacheBackend**: Abstracts Redis, in-memory, and NVMe cache backends. Pluggable eviction policy (LRU/LFU, maxEntries, ttlSecs).
+- **API Endpoints**: `/models/load`, `/models/unload`, `/models/status` with token-based auth for CLI/external tools.
+- **MetricsService**: Emits per-model and global Prometheus metrics. Config-driven alert thresholds in `monitoring/alerts.yaml`.
+- **HybridActivationCache**: UtilityProcess-scoped, exposes minimal API for agent access (DebuggerAgent, ReflexionAgent).
+- **Device Placement**: Auto-detects devices, with user override in `rocketship.yaml`.
+
+### Example Config (rocketship.yaml)
+```yaml
+cache:
+  evictionPolicy:
+    policy: LRU
+    maxEntries: 100
+    ttlSecs: 3600
+  backend: redis
+
+devices: auto # or ["cuda:0","cuda:1"]
+
+agents:
+  PlannerAgent:
+    whileLoading:
+      action: fallbackPlan
+      pollEvery: 500
+
+monitoring:
+  alerts:
+    - expr: model_load_time_seconds{job="rocketship"} > 10
+      for: 1m
+      labels: {severity: "warning"}
+```
+
+### References
+- `extension/src/services/SupervisorService.ts`
+- `extension/src/services/ModelRouter.ts`
+- `extension/src/services/CacheBackend.ts`
+- `extension/src/services/ApiServer.ts`
+- `extension/src/services/MetricsService.ts`
+- `extension/src/services/HybridActivationCache.ts`
+- `rocketship.yaml`

@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DocsAgentResponse",
+  "type": "object",
+  "properties": {
+    "documentation": { "type": "string" },
+    "examples": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "metadata": { "type": "object" }
+  },
+  "required": ["documentation"],
+  "additionalProperties": false,
+  "description": "TODO: Add validation rules and examples for DocsAgentResponse."
+}

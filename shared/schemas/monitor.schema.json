@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MonitorAgentResponse",
+  "type": "object",
+  "properties": {
+    "alerts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "type": { "type": "string" },
+          "message": { "type": "string" }
+        },
+        "required": ["type", "message"]
+      }
+    },
+    "metadata": { "type": "object" }
+  },
+  "required": ["alerts"],
+  "additionalProperties": false,
+  "description": "TODO: Add validation rules and examples for MonitorAgentResponse."
+}
