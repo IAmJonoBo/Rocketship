@@ -69,7 +69,7 @@ jobs:
       - name: Generate SBOM
         run: syft . -o cyclonedx-json > sbom.json
       - name: Upload SBOM Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: sbom
           path: sbom.json
