@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Check links in docs
-        uses: lycheeverse/lychee-action@v1.10.0
+        uses: lycheeverse/lychee-action@v2.0.2
         with:
           args: --no-progress --verbose docs/**/*.md
       - name: Ensure TOC in Markdown files
