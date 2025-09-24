@@ -16,7 +16,7 @@ importers:
         version: 0.5.9
       opossum:
         specifier: ^8.4.0
-        version: 8.4.0
+        version: 8.5.0
     devDependencies:
       '@axe-core/cli':
         specifier: ^4.10.1
@@ -50,7 +50,7 @@ importers:
         version: 0.5.6
       '@types/opossum':
         specifier: ^8.1.8
-        version: 8.1.8
+        version: 8.1.9
       '@typescript-eslint/eslint-plugin':
         specifier: ^8.32.0
         version: 8.44.1(@typescript-eslint/parser@8.44.1(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3))(eslint@9.26.0(jiti@2.4.2))(typescript@5.8.3)
@@ -169,7 +169,7 @@ importers:
         version: 8.17.1
       opossum:
         specifier: ^8.4.0
-        version: 8.4.0
+        version: 8.5.0
     devDependencies:
       madge:
         specifier: ^8.0.0
@@ -1883,8 +1883,8 @@ packages:
   '@types/json5@0.0.29':
     resolution: {integrity: sha512-dRLjCWHYg4oaA77cxO64oO+7JwCwnIzkZPdrrC71jQmQtlhM556pwKo5bUzqvZndkVbeFLIIi+9TC40JNF5hNQ==}
 
-  '@types/node@18.19.100':
-    resolution: {integrity: sha512-ojmMP8SZBKprc3qGrGk8Ujpo80AXkrP7G2tOT4VWr5jlr5DHjsJF+emXJz+Wm0glmy4Js62oKMdZZ6B9Y+tEcA==}
+  '@types/node@18.19.127':
+    resolution: {integrity: sha512-gSjxjrnKXML/yo0BO099uPixMqfpJU0TKYjpfLU7TrtA2WWDki412Np/RSTPRil1saKBhvVVKzVx/p/6p94nVA==}
 
   '@types/node@20.17.46':
     resolution: {integrity: sha512-0PQHLhZPWOxGW4auogW0eOQAuNIlCYvibIpG67ja0TOJ6/sehu+1en7sfceUn+QQtx4Rk3GxbLNwPh0Cav7TWw==}
@@ -1895,8 +1895,8 @@ packages:
   '@types/node@24.5.2':
     resolution: {integrity: sha512-FYxk1I7wPv3K2XBaoyH2cTnocQEu8AOZ60hPbsyukMPLv5/5qr7V1i8PLHdl6Zf87I+xZXFvPCXYjiTFq+YSDQ==}
 
-  '@types/opossum@8.1.8':
-    resolution: {integrity: sha512-FTpWfHcpMgdLIdaTpL1D/nTlIH03T62RIQfzmwdEDAndYJwHDdUTkBvgXhaVp/zN74woiWEyb6DSNuZHPt1gmA==}
+  '@types/opossum@8.1.9':
+    resolution: {integrity: sha512-Jm/tYxuJFefiwRYs+/EOsUP3ktk0c8siMgAHPLnA4PXF4wKghzcjqf88dY+Xii5jId5Txw4JV0FMKTpjbd7KJA==}
 
   '@types/parse-json@4.0.2':
     resolution: {integrity: sha512-dISoDXWWQwUquiKsyZ4Ng+HX2KsPL7LyHKHQwgGFEA3IaKac4Obd+h2a/a6waisAoepJlBcx9paWqjA8/HVjCw==}
@@ -4637,9 +4637,9 @@ packages:
     resolution: {integrity: sha512-7x81NCL719oNbsq/3mh+hVrAWmFuEYUqrq/Iw3kUzH8ReypT9QQ0BLoJS7/G9k6N81XjW4qHWtjWwe/9eLy1EQ==}
     engines: {node: '>=12'}
 
-  opossum@8.4.0:
-    resolution: {integrity: sha512-YYamqKu48bZCSTJKSWLLO4SSk8tKN2Gg2z1sJZVzHJYVObMO/xQpIzAh6re9HCMHRdB1dJvBjJH18DW7xYOicg==}
-    engines: {node: ^22 || ^21 || ^20 || ^18 || ^16}
+  opossum@8.5.0:
+    resolution: {integrity: sha512-LZNvs+p9/ZbG4oN6unnjh4hTxkB0dyHKI2p7azVt8w+//GKDpfHss6WR7KebbpzGEssYwtSd8Mvwxqcmxg10NA==}
+    engines: {node: ^24 || ^22 || ^21 || ^20 || ^18 || ^16}
 
   optionator@0.9.4:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
@@ -7911,7 +7911,7 @@ snapshots:
 
   '@types/conventional-commits-parser@5.0.1':
     dependencies:
-      '@types/node': 22.15.17
+      '@types/node': 24.5.2
 
   '@types/docker-modem@3.0.6':
     dependencies:
@@ -7955,7 +7955,7 @@ snapshots:
 
   '@types/json5@0.0.29': {}
 
-  '@types/node@18.19.100':
+  '@types/node@18.19.127':
     dependencies:
       undici-types: 5.26.5
 
@@ -7971,24 +7971,24 @@ snapshots:
     dependencies:
       undici-types: 7.12.0
 
-  '@types/opossum@8.1.8':
+  '@types/opossum@8.1.9':
     dependencies:
-      '@types/node': 22.15.17
+      '@types/node': 24.5.2
 
   '@types/parse-json@4.0.2': {}
 
   '@types/ssh2-streams@0.1.12':
     dependencies:
-      '@types/node': 22.15.17
+      '@types/node': 24.5.2
 
   '@types/ssh2@0.5.52':
     dependencies:
-      '@types/node': 22.15.17
+      '@types/node': 24.5.2
       '@types/ssh2-streams': 0.1.12
 
   '@types/ssh2@1.15.5':
     dependencies:
-      '@types/node': 18.19.100
+      '@types/node': 18.19.127
 
   '@types/stack-utils@2.0.3': {}
 
@@ -10713,7 +10713,7 @@ snapshots:
   jest-util@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 22.15.17
+      '@types/node': 24.5.2
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
@@ -11270,7 +11270,7 @@ snapshots:
       is-docker: 2.2.1
       is-wsl: 2.2.0
 
-  opossum@8.4.0: {}
+  opossum@8.5.0: {}
 
   optionator@0.9.4:
     dependencies:
@@ -11560,7 +11560,7 @@ snapshots:
       '@protobufjs/path': 1.1.2
       '@protobufjs/pool': 1.1.0
       '@protobufjs/utf8': 1.1.0
-      '@types/node': 22.15.17
+      '@types/node': 24.5.2
       long: 5.3.2
 
   proxy-addr@2.0.7:
