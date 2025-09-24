@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "commander": "^13.1.0"
+    "commander": "^14.0.0"
   },
   "devDependencies": {
     "@types/commander": "^2.12.0",
