@@ -63,7 +63,7 @@
     ]
   },
   "dependencies": {
-    "apache-arrow": "^19.0.1",
+    "apache-arrow": "^21.0.0",
     "json-schema-faker": "^0.5.9",
     "opossum": "^8.4.0"
   }
